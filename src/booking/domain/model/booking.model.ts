@@ -10,6 +10,11 @@ import { PaymentState } from './paymentState.enum';
 import { BookingPendingEvent } from '../events/bookingPendingEvent';
 import { BookingConfirmEvent } from '../events/bookingConfirmEvent';
 import { BookingCancelEvent } from '../events/bookingCancelEvent';
+import { CheckInEvent } from '../events/checkInEvent';
+import { CheckOutEvent } from '../events/checkOutEvent';
+import { PaymentRevertedEvent } from '../events/paymentRevertedEvent';
+import { PaymentCompleteEvent } from '../events/paymentCompleteEvent';
+import { PaymentNoFundsEvent } from '../events/paymentNoFundsEvent';
 
 export class Booking extends AggregateRoot {
   private id: string;
@@ -30,6 +35,7 @@ export class Booking extends AggregateRoot {
     guestId: string,
   ) {
     super();
+
     this.id = uuidv4();
     this.propertyId = propertyId;
     this.guestId = guestId;
@@ -45,10 +51,12 @@ export class Booking extends AggregateRoot {
 
   public checkIn(checkInDate: Date): void {
     this.checkInDate = checkInDate;
+    this.apply(new CheckInEvent(this.id));
   }
 
   public checkOut(checkOutDate: Date): void {
     this.checkOutDate = checkOutDate;
+    this.apply(new CheckOutEvent(this.id));
   }
 
   public confirmBooking(): void {
@@ -58,7 +66,7 @@ export class Booking extends AggregateRoot {
       )
     ) {
       throw new UnprocessableEntityException(
-        `El estado inicial de la reserva es diferente a ${this.bookingState}`,
+        `El estado inicial de la reserva es diferente a ${BookingState.PENDING}`,
       );
     }
     this.bookingState = BookingState.CONFIRMED;
@@ -75,7 +83,40 @@ export class Booking extends AggregateRoot {
     this.apply(new BookingCancelEvent(this.id));
   }
 
-  public addNumberOfGuests(): void {
-    console.log('agregar huespedes');
+  public completePayment(): void {
+    if (this.paymentState === PaymentState.COMPLETE) {
+      throw new UnprocessableEntityException(
+        `El pago ya fue realizado previamente`,
+      );
+    }
+    this.paymentState = PaymentState.COMPLETE;
+    this.apply(new PaymentCompleteEvent(this.id));
+  }
+
+  public noFundsPayment(): void {
+    if (this.paymentState !== PaymentState.PENDING) {
+      throw new UnprocessableEntityException(`El pago no esta pendiente`);
+    }
+    this.paymentState = PaymentState.NO_FUNDS;
+    this.apply(new PaymentNoFundsEvent(this.id));
+  }
+
+  public revertedPayment(): void {
+    if (this.paymentState !== PaymentState.COMPLETE) {
+      throw new UnprocessableEntityException(
+        `No se puede revertir el pago porque no se completo`,
+      );
+    }
+    this.paymentState = PaymentState.REVERTED;
+    this.apply(new PaymentRevertedEvent(this.id));
+  }
+
+  public addNumberOfGuests(numberOfGuests: number): void {
+    if (this.numberOfGuests <= 0) {
+      throw new UnprocessableEntityException(
+        `Los huespedes a adicionar deben ser mayores o iguales a uno`,
+      );
+    }
+    this.numberOfGuests = numberOfGuests;
   }
 }
