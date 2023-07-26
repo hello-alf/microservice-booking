@@ -5,6 +5,8 @@ import { BookingState } from './bookingState.enum';
 import { PaymentState } from './paymentState.enum';
 
 export class Booking extends AggregateRoot {
+  private propertyId: string;
+  private guestId: string;
   private costo: PriceValue;
   private bookingState: BookingState;
   private paymentState: PaymentState;
@@ -13,9 +15,15 @@ export class Booking extends AggregateRoot {
   private checkInDate: Date;
   private checkOutDate: Date;
 
-  constructor(costo: number, numberOfGuests: number) {
+  constructor(
+    costo: number,
+    numberOfGuests: number,
+    propertyId: string,
+    guestId: string,
+  ) {
     super();
-
+    this.propertyId = propertyId;
+    this.guestId = guestId;
     this.costo = new PriceValue(costo, new Currency('BOB'));
     this.bookingState = BookingState.PENDING;
     this.paymentState = PaymentState.PENDING;
