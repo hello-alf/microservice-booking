@@ -1,10 +1,18 @@
+import { AggregateRoot } from '@nestjs/cqrs';
+import { UnprocessableEntityException } from '@nestjs/common';
+import { v4 as uuidv4 } from 'uuid';
+
 import { PriceValue } from '../../../shared-kernel/valueObjects/priceValue';
 import { Currency } from '../../../shared-kernel/valueObjects/currency';
-import { AggregateRoot } from '../../../shared-kernel/core/aggregateRoot';
 import { BookingState } from './bookingState.enum';
 import { PaymentState } from './paymentState.enum';
 
+import { BookingPendingEvent } from '../events/bookingPendingEvent';
+import { BookingConfirmEvent } from '../events/bookingConfirmEvent';
+import { BookingCancelEvent } from '../events/bookingCancelEvent';
+
 export class Booking extends AggregateRoot {
+  private id: string;
   private propertyId: string;
   private guestId: string;
   private costo: PriceValue;
@@ -22,6 +30,7 @@ export class Booking extends AggregateRoot {
     guestId: string,
   ) {
     super();
+    this.id = uuidv4();
     this.propertyId = propertyId;
     this.guestId = guestId;
     this.costo = new PriceValue(costo, new Currency('BOB'));
@@ -31,6 +40,7 @@ export class Booking extends AggregateRoot {
     this.numberOfGuests = numberOfGuests;
     this.checkInDate = null;
     this.checkOutDate = null;
+    this.apply(new BookingPendingEvent(this.id));
   }
 
   public checkIn(checkInDate: Date): void {
@@ -42,11 +52,27 @@ export class Booking extends AggregateRoot {
   }
 
   public confirmBooking(): void {
-    console.log('confirmar booking');
+    if (
+      [BookingState.CONFIRMED, BookingState.CANCELLED].includes(
+        this.bookingState,
+      )
+    ) {
+      throw new UnprocessableEntityException(
+        `El estado inicial de la reserva es diferente a ${this.bookingState}`,
+      );
+    }
+    this.bookingState = BookingState.CONFIRMED;
+    this.apply(new BookingConfirmEvent(this.id));
   }
 
   public cancelBooking(): void {
-    console.log('cancelar booking');
+    if (this.bookingState === BookingState.CANCELLED) {
+      throw new UnprocessableEntityException(
+        `El estado ya esta ${BookingState.CANCELLED}`,
+      );
+    }
+    this.bookingState = BookingState.CANCELLED;
+    this.apply(new BookingCancelEvent(this.id));
   }
 
   public addNumberOfGuests(): void {

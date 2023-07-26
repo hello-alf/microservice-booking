@@ -1,6 +1,6 @@
 export enum PaymentState {
-  PENDING,
-  COMPLETE,
-  NO_FUNDS,
-  REVERTED,
+  PENDING = 'Pendiente',
+  COMPLETE = 'Completado',
+  NO_FUNDS = 'Sin fondos',
+  REVERTED = 'Revertido',
 }
