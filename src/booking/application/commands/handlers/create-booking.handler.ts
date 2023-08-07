@@ -14,7 +14,7 @@ export class CreateBookingHandler
 {
   constructor(
     private readonly bookingRepository: BookingRepository,
-    private readonly propertytRepository: PropertyRepository,
+    private readonly propertyRepository: PropertyRepository,
     private readonly bookingFactory: BookingFactory,
     private readonly publisher: EventPublisher,
   ) {}
@@ -31,7 +31,7 @@ export class CreateBookingHandler
         '123123',
       );
 
-      const property = await this.propertytRepository.findById(
+      const property = await this.propertyRepository.findById(
         createBookingRequest.propertyId,
       );
 
@@ -39,11 +39,14 @@ export class CreateBookingHandler
         throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
 
       const booking = this.publisher.mergeObjectContext(
-        await this.bookingRepository.save(bookingObject),
+        this.bookingRepository.save(bookingObject),
       );
 
       booking.commit();
+
+      return booking;
     } catch (error) {
+      console.log('error:::', error);
       throw new BadRequestException(error.message);
     }
   }

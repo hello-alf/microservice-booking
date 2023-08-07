@@ -25,7 +25,7 @@ export class CreatePropertyHandler
       );
 
       const property = this.publisher.mergeObjectContext(
-        await this.propertyRepository.save(propertyObject),
+        this.propertyRepository.save(propertyObject),
       );
 
       property.commit();

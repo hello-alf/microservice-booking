@@ -19,8 +19,8 @@ export class BookingRepository implements iBookingRepository {
   save = (booking: Booking): Booking => {
     const newBooking = new this.bookingModel({
       _id: new ObjectId(),
+      propertyId: booking.getPropertyId(),
       numberOfGuests: booking.getNumberOfGuests(),
-      // pricePerNight: booking,
     });
 
     newBooking.save();
