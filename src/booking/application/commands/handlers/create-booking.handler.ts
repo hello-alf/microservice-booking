@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
 import { CreateBookingCommand } from '../impl/create-booking.command';
-import { BookingRepository } from '../../../domain/repositories/BookingRepository';
+import { BookingRepository } from '../../../domain/repositories/bookingRepository';
 
 @CommandHandler(CreateBookingCommand)
 export class CreateBookingHandler

@@ -2,6 +2,7 @@ import { Body, Controller, Post, Get } from '@nestjs/common';
 import { CreateBookingDto } from '../../application/dtos/booking.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateBookingCommand } from '../../application/commands/impl/create-booking.command';
+import { GetBookingsQuery } from '../../application/queries/impl';
 
 @Controller('booking')
 export class BookingController {
@@ -12,7 +13,7 @@ export class BookingController {
 
   @Get('/')
   findAll() {
-    return [];
+    return this.queryBus.execute(new GetBookingsQuery());
   }
 
   @Post()

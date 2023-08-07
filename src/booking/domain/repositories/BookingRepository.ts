@@ -6,4 +6,5 @@ export class BookingRepository {
   newId: () => Promise<string>;
   save: (account: Booking) => Promise<void>;
   findById: (id: string) => Promise<Booking | null>;
+  findAll: () => Promise<Booking | null>;
 }
