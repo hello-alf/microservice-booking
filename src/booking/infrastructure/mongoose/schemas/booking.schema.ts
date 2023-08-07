@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import { now, Document } from 'mongoose';
 import { IdentifiableEntitySchema } from '../../database/identifiable-entity.schema';
 
-// @Schema({ versionKey: false, collection: 'bookings' })
+@Schema({ versionKey: false, collection: 'bookings' })
 export class BookingModelSchema extends IdentifiableEntitySchema {
   @Prop({ required: true })
   propertyId: string;
