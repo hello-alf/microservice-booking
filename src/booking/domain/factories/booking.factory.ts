@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { iBookingFactory } from './iBookingFactory';
+import { iBooking } from './iBooking';
 import { Booking } from '../model/booking.model';
 
 @Injectable()
-export class BookingFactory implements iBookingFactory {
+export class BookingFactory implements iBooking {
   createBooking(
     costo: number,
     numberOfGuests: number,

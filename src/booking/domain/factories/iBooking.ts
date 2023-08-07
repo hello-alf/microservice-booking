@@ -1,4 +1,4 @@
-export interface iBookingFactory {
+export interface iBooking {
   createBooking(
     costo: number,
     numberOfGuests: number,

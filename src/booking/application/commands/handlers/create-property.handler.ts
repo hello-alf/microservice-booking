@@ -1,6 +1,9 @@
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
+import { BadRequestException } from '@nestjs/common';
+
 import { CreatePropertyCommand } from '../impl/create-property.command';
 import { PropertyRepository } from '../../../infrastructure/mongoose/repositories/property.repository';
+import { PropertyFactory } from '../../../domain/factories/property.factory';
 
 @CommandHandler(CreatePropertyCommand)
 export class CreatePropertyHandler
@@ -9,17 +12,27 @@ export class CreatePropertyHandler
   constructor(
     private readonly propertyRepository: PropertyRepository,
     private readonly publisher: EventPublisher,
+    private readonly propertyFactory: PropertyFactory,
   ) {}
 
   async execute(command: CreatePropertyCommand) {
-    const { createPropertyRequest } = command;
+    try {
+      const { createPropertyRequest } = command;
 
-    const property = this.publisher.mergeObjectContext(
-      await this.propertyRepository.save(createPropertyRequest),
-    );
+      const propertyObject = this.propertyFactory.createProperty(
+        createPropertyRequest.name,
+        createPropertyRequest.pricePerNight,
+      );
 
-    property.commit();
+      const property = this.publisher.mergeObjectContext(
+        await this.propertyRepository.save(propertyObject),
+      );
 
-    return property;
+      property.commit();
+
+      return property;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

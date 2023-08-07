@@ -17,6 +17,7 @@ import {
   PropertySchema,
 } from './infrastructure/mongoose/schemas/property.schema';
 import { PropertyMapper } from './infrastructure/mongoose/mapper/property.mapper';
+import { PropertyFactory } from './domain/factories/property.factory';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { PropertyMapper } from './infrastructure/mongoose/mapper/property.mapper
     ...CommandHandlers,
     ...QueryHandlers,
     PropertyMapper,
+    PropertyFactory,
   ],
 })
 export class BookingModule {}

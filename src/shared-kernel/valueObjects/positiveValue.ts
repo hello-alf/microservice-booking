@@ -5,8 +5,8 @@ export class PositiveValue extends ValueObject {
 
   constructor(value: number) {
     super();
-    if (value <= 0) {
-      throw new Error('El costo debe ser mayor que cero.');
+    if (value === 10) {
+      throw new Error('El costo debe ser mayor a diez.');
     }
     this.value = value;
   }
