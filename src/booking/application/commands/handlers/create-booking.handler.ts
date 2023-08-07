@@ -11,7 +11,7 @@ export class CreateBookingHandler
 {
   constructor(
     private readonly bookingRepository: BookingRepository,
-    private readonly propertytRepository: BookingRepository,
+    private readonly propertytRepository: PropertyRepository,
     private readonly publisher: EventPublisher,
   ) {}
 
@@ -19,11 +19,13 @@ export class CreateBookingHandler
     const { createBookingRequest } = command;
     console.log('createBookingRequest', createBookingRequest);
 
-    const property = this.propertytRepository.findById(
+    const property = await this.propertytRepository.findById(
       createBookingRequest.propertyId,
     );
 
     if (!property) throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
+
+    return { hola: 'mundo' };
 
     // const hero = this.publisher.mergeObjectContext(
     //   await this.repository.findOneById(+heroId),

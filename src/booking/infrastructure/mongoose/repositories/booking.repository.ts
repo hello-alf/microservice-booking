@@ -18,6 +18,7 @@ export class BookingRepository implements iBookingRepository {
 
   findById: (id: string) => Promise<BookingModelSchema | null>;
 
-  public findAll = (): Promise<BookingModelSchema[]> =>
-    this.bookingModel.find().exec();
+  findAll = (): Promise<BookingModelSchema[]> => {
+    return this.bookingModel.find().exec();
+  };
 }
