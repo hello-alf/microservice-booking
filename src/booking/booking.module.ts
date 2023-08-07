@@ -4,10 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { BookingController } from './api/booking/booking.controller';
 import { PropertyController } from './api/property/property.controller';
-import { CommandHandlers } from './application/commands/handlers';
-import { QueryHandlers } from './application/queries/handlers';
-import { BookingRepository } from './infrastructure/mongoose/repositories/booking.repository';
-import { PropertyRepository } from './infrastructure/mongoose/repositories/property.repository';
+import { Repositories } from './infrastructure/mongoose/repositories';
 import {
   BookingModelSchema,
   BookingSchema,
@@ -16,8 +13,10 @@ import {
   PropertyModelSchema,
   PropertySchema,
 } from './infrastructure/mongoose/schemas/property.schema';
-import { PropertyMapper } from './infrastructure/mongoose/mapper/property.mapper';
-import { PropertyFactory } from './domain/factories/property.factory';
+import { Mapper } from './infrastructure/mongoose/mapper';
+import { CommandHandlers } from './application/commands/handlers';
+import { QueryHandlers } from './application/queries/handlers';
+import { Factories } from './domain/factories';
 
 @Module({
   imports: [
@@ -37,12 +36,11 @@ import { PropertyFactory } from './domain/factories/property.factory';
   ],
   controllers: [BookingController, PropertyController],
   providers: [
-    BookingRepository,
-    PropertyRepository,
+    ...Repositories,
     ...CommandHandlers,
     ...QueryHandlers,
-    PropertyMapper,
-    PropertyFactory,
+    ...Mapper,
+    ...Factories,
   ],
 })
 export class BookingModule {}

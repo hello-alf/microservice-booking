@@ -5,7 +5,6 @@ export class BookingState extends ValueObject {
 
   constructor(state: string) {
     super();
-    // this.checkRule();
     this.state = state;
   }
 

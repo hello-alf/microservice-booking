@@ -1,9 +1,12 @@
 import { NotFoundException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
+import { BadRequestException } from '@nestjs/common';
+
 import { CreateBookingCommand } from '../impl/create-booking.command';
 import { BookingRepository } from '../../../infrastructure/mongoose/repositories/booking.repository';
 import { PropertyRepository } from '../../../infrastructure/mongoose/repositories/property.repository';
 import { BookingError } from '../../../domain/errors/bookingError';
+import { BookingFactory } from '../../../domain/factories/booking.factory';
 
 @CommandHandler(CreateBookingCommand)
 export class CreateBookingHandler
@@ -12,25 +15,36 @@ export class CreateBookingHandler
   constructor(
     private readonly bookingRepository: BookingRepository,
     private readonly propertytRepository: PropertyRepository,
+    private readonly bookingFactory: BookingFactory,
     private readonly publisher: EventPublisher,
   ) {}
 
   async execute(command: CreateBookingCommand) {
-    const { createBookingRequest } = command;
-    console.log('createBookingRequest', createBookingRequest);
+    try {
+      const { createBookingRequest } = command;
+      console.log('createBookingRequest', createBookingRequest);
 
-    const property = await this.propertytRepository.findById(
-      createBookingRequest.propertyId,
-    );
+      const bookingObject = this.bookingFactory.createBooking(
+        90,
+        createBookingRequest.numberOfGuests,
+        createBookingRequest.propertyId,
+        '123123',
+      );
 
-    if (!property) throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
+      const property = await this.propertytRepository.findById(
+        createBookingRequest.propertyId,
+      );
 
-    return { hola: 'mundo' };
+      if (!property)
+        throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
 
-    // const hero = this.publisher.mergeObjectContext(
-    //   await this.repository.findOneById(+heroId),
-    // );
-    // hero.addItem(itemId);
-    // hero.commit();
+      const booking = this.publisher.mergeObjectContext(
+        await this.bookingRepository.save(bookingObject),
+      );
+
+      booking.commit();
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

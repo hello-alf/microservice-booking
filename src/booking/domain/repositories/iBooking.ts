@@ -1,9 +1,7 @@
 import { Booking } from '../model/booking.model';
 
 export interface iBookingRepository {
-  newId: () => Promise<string>;
-
-  save: (booking: any) => Promise<void>;
+  save: (booking: any) => any;
 
   findById: (id: string) => Promise<any | null>;
 
