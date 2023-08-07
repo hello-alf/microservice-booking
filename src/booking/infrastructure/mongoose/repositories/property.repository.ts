@@ -21,7 +21,9 @@ export class PropertyRepository implements iPropertyRepository {
       _id: new ObjectId(),
       ...property,
     });
+
     newProperty.save();
+
     return this.propertyMapper.mapToDomain(newProperty);
   };
 
