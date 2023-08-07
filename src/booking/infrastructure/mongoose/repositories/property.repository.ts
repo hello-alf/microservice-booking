@@ -29,7 +29,8 @@ export class PropertyRepository implements iPropertyRepository {
   };
 
   findById = (id: string): Promise<PropertyModelSchema> => {
-    return this.propertyModel.findById(id).exec();
+    const objectId = new ObjectId(id);
+    return this.propertyModel.findById(objectId).exec();
   };
 
   findAll = (): Promise<PropertyModelSchema[]> => {
