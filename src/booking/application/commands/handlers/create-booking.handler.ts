@@ -9,12 +9,9 @@ export class CreateBookingHandler
   constructor(
     private readonly repository: BookingRepository,
     private readonly publisher: EventPublisher,
-  ) {
-    console.log('00002');
-  }
+  ) {}
 
   async execute(command: CreateBookingCommand) {
-    console.log('KillDragonCommand');
     console.log('command', command);
     return { hola: 'mundo' };
     // const { heroId, itemId } = command;

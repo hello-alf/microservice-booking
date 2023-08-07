@@ -17,7 +17,6 @@ export class BookingController {
 
   @Post()
   create(@Body() payload: CreateBookingDto) {
-    console.log('Por Create');
     return this.commandBus.execute(new CreateBookingCommand(payload));
   }
 }
