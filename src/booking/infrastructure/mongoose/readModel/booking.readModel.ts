@@ -7,4 +7,7 @@ import { IdentifiableEntitySchema } from '../../database/identifiable-entity.sch
 export class BookingReadModel extends IdentifiableEntitySchema {
   @Prop()
   readonly propertyId: string;
+
+  @Prop()
+  readonly numberOfGuests: number;
 }
