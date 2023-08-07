@@ -14,7 +14,7 @@ export class BookingMapper {
 
   public mapToDomain(bookingDocumentSchema: BookingModelSchema): Booking {
     return new Booking(
-      20,
+      bookingDocumentSchema.costByNight,
       bookingDocumentSchema.numberOfGuests,
       bookingDocumentSchema.propertyId,
       '1232',

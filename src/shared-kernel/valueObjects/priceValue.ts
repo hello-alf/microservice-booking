@@ -7,9 +7,11 @@ export class PriceValue extends ValueObject {
 
   constructor(amount: number, currency: Currency) {
     super();
+
     if (amount <= 0) {
       throw new Error('El costo debe ser mayor que cero.');
     }
+
     this.amount = amount;
     this.currency = currency;
   }
@@ -20,5 +22,9 @@ export class PriceValue extends ValueObject {
 
   public deductedWith(amount: number): PriceValue {
     return new PriceValue(this.amount - amount, this.currency);
+  }
+
+  public getAmount(): number {
+    return this.amount;
   }
 }

@@ -24,19 +24,19 @@ export class CreateBookingHandler
       const { createBookingRequest } = command;
       console.log('createBookingRequest', createBookingRequest);
 
-      const bookingObject = this.bookingFactory.createBooking(
-        90,
-        createBookingRequest.numberOfGuests,
-        createBookingRequest.propertyId,
-        '123123',
-      );
-
       const property = await this.propertyRepository.findById(
         createBookingRequest.propertyId,
       );
 
       if (!property)
         throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
+
+      const bookingObject = this.bookingFactory.createBooking(
+        property.pricePerNight,
+        createBookingRequest.numberOfGuests,
+        createBookingRequest.propertyId,
+        '123123',
+      );
 
       const booking = this.publisher.mergeObjectContext(
         this.bookingRepository.save(bookingObject),

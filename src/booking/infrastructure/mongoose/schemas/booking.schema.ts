@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Types } from 'mongoose';
-import { now, Document } from 'mongoose';
+import { now } from 'mongoose';
+
 import { IdentifiableEntitySchema } from '../../database/identifiable-entity.schema';
 
 @Schema({ collection: 'bookings' })
@@ -11,13 +11,17 @@ export class BookingModelSchema extends IdentifiableEntitySchema {
   @Prop({ required: true })
   numberOfGuests: number;
 
-  // getNumberOfGuests(): number {
-  //   return this.numberOfGuests;
-  // }
+  @Prop({ required: true })
+  costByNight: number;
 
-  // getPropertyId(): string {
-  //   return this.propertyId;
-  // }
+  @Prop({ required: true })
+  totalCost: number;
+
+  @Prop({ type: Date })
+  registerDate: Date;
+
+  @Prop({ type: Date, default: now() })
+  updatedAt: Date;
 }
 
 export const BookingSchema = SchemaFactory.createForClass(BookingModelSchema);

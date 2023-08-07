@@ -20,16 +20,17 @@ export class Booking extends AggregateRoot {
   private id: string;
   private propertyId: string;
   private guestId: string;
-  private costo: PriceValue;
+  private totalCost: PriceValue;
   private bookingState: BookingState;
   private paymentState: PaymentState;
   private registerDate: Date;
   private numberOfGuests: number;
+  private costByNight: number;
   private checkInDate: Date;
   private checkOutDate: Date;
 
   constructor(
-    costo: number,
+    costByNight: number,
     numberOfGuests: number,
     propertyId: string,
     guestId: string,
@@ -39,11 +40,15 @@ export class Booking extends AggregateRoot {
     this.id = uuidv4();
     this.propertyId = propertyId;
     this.guestId = guestId;
-    this.costo = new PriceValue(costo, new Currency('BOB'));
+    this.totalCost = new PriceValue(
+      costByNight * numberOfGuests,
+      new Currency('BOB'),
+    );
     this.bookingState = BookingState.PENDING;
     this.paymentState = PaymentState.PENDING;
     this.registerDate = new Date();
     this.numberOfGuests = numberOfGuests;
+    this.costByNight = costByNight;
     this.checkInDate = null;
     this.checkOutDate = null;
     this.apply(new BookingPendingEvent(this.id));
@@ -123,15 +128,29 @@ export class Booking extends AggregateRoot {
   public getNumberOfGuests(): number {
     return this.numberOfGuests;
   }
-  public setNumberOfGuests(value: number) {
-    this.numberOfGuests = value;
-  }
+  // public setNumberOfGuests(value: number) {
+  //   this.numberOfGuests = value;
+  // }
 
   public getPropertyId(): string {
     return this.propertyId;
   }
 
-  public setPropertyId(value: string): void {
-    this.propertyId = value;
+  // public setPropertyId(value: string): void {
+  //   this.propertyId = value;
+  // }
+
+  public getCostByNight(): number {
+    return this.costByNight;
   }
+  // public setCostByNight(value: number) {
+  //   this.costByNight = value;
+  // }
+
+  public getTotalCost(): PriceValue {
+    return this.totalCost;
+  }
+  // public setTotalCost(value: PriceValue) {
+  //   this.totalCost = value;
+  // }
 }
