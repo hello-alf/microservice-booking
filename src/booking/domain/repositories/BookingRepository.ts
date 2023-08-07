@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { Booking } from '../model/booking.model';
 
-export interface BookingRepository {
+@Injectable()
+export class BookingRepository {
   newId: () => Promise<string>;
   save: (account: Booking) => Promise<void>;
   findById: (id: string) => Promise<Booking | null>;

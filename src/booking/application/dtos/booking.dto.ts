@@ -1,10 +1,4 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsArray,
-  ValidateNested,
-  ValidateIf,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 // import { CreateDetailDto } from './detail.dtos';
@@ -15,4 +9,9 @@ export class CreateBookingDto {
   @IsNotEmpty()
   @ApiProperty({ description: `property identifier` })
   readonly propertyId: string;
+
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({ description: `number og guests` })
+  readonly numberOfGuests: number;
 }

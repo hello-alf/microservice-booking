@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
-import { CreateBookingCommand } from './create-booking.command';
-import { BookingRepository } from '../../domain/repositories/BookingRepository';
+import { CreateBookingCommand } from '../impl/create-booking.command';
+import { BookingRepository } from '../../../domain/repositories/BookingRepository';
 
 @CommandHandler(CreateBookingCommand)
 export class CreateBookingHandler
@@ -9,10 +9,14 @@ export class CreateBookingHandler
   constructor(
     private readonly repository: BookingRepository,
     private readonly publisher: EventPublisher,
-  ) {}
+  ) {
+    console.log('00002');
+  }
 
   async execute(command: CreateBookingCommand) {
+    console.log('KillDragonCommand');
     console.log('command', command);
+    return { hola: 'mundo' };
     // const { heroId, itemId } = command;
     // const hero = this.publisher.mergeObjectContext(
     //   await this.repository.findOneById(+heroId),

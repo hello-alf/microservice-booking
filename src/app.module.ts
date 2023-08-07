@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { SharedKernelModule } from './shared-kernel/shared-kernel.module';
 import { BookingModule } from './booking/booking.module';
 import { MongooseConfigModule } from './booking/infrastructure/mongoose/mongoose.module';
@@ -20,7 +18,5 @@ import { environments } from './environments';
     BookingModule,
     MongooseConfigModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
