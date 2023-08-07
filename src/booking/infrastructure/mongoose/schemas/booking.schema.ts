@@ -17,7 +17,19 @@ export class BookingModelSchema extends IdentifiableEntitySchema {
   @Prop({ required: true })
   totalCost: number;
 
-  @Prop({ type: Date })
+  @Prop({ required: true })
+  bookingState: string;
+
+  @Prop({ required: true })
+  paymentState: string;
+
+  @Prop({ type: Date, required: true })
+  checkInDate: Date;
+
+  @Prop({ type: Date, required: true })
+  checkOutDate: Date;
+
+  @Prop({ type: Date, required: true })
   registerDate: Date;
 
   @Prop({ type: Date, default: now() })

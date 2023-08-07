@@ -9,7 +9,16 @@ export class BookingFactory implements iBooking {
     numberOfGuests: number,
     propertyId: string,
     guestId: string,
+    checkInDate: Date,
+    checkOutDate: Date,
   ) {
-    return new Booking(costo, numberOfGuests, propertyId, guestId);
+    return new Booking(
+      costo,
+      numberOfGuests,
+      propertyId,
+      guestId,
+      checkInDate,
+      checkOutDate,
+    );
   }
 }

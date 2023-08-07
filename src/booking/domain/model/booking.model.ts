@@ -34,6 +34,8 @@ export class Booking extends AggregateRoot {
     numberOfGuests: number,
     propertyId: string,
     guestId: string,
+    checkInDate: Date,
+    checkOutDate: Date,
   ) {
     super();
 
@@ -49,20 +51,20 @@ export class Booking extends AggregateRoot {
     this.registerDate = new Date();
     this.numberOfGuests = numberOfGuests;
     this.costByNight = costByNight;
-    this.checkInDate = null;
-    this.checkOutDate = null;
+    this.checkInDate = checkInDate;
+    this.checkOutDate = checkOutDate;
     this.apply(new BookingPendingEvent(this.id));
   }
 
-  public checkIn(checkInDate: Date): void {
-    this.checkInDate = checkInDate;
-    this.apply(new CheckInEvent(this.id));
-  }
+  // public checkIn(checkInDate: Date): void {
+  //   this.checkInDate = checkInDate;
+  //   this.apply(new CheckInEvent(this.id));
+  // }
 
-  public checkOut(checkOutDate: Date): void {
-    this.checkOutDate = checkOutDate;
-    this.apply(new CheckOutEvent(this.id));
-  }
+  // public checkOut(checkOutDate: Date): void {
+  //   this.checkOutDate = checkOutDate;
+  //   this.apply(new CheckOutEvent(this.id));
+  // }
 
   public confirmBooking(): void {
     if (
@@ -153,4 +155,30 @@ export class Booking extends AggregateRoot {
   // public setTotalCost(value: PriceValue) {
   //   this.totalCost = value;
   // }
+
+  public getBookingState(): BookingState {
+    return this.bookingState;
+  }
+  // public setBookingState(value: BookingState) {
+  //   this.bookingState = value;
+  // }
+
+  public getPaymentState(): PaymentState {
+    return this.paymentState;
+  }
+
+  public getRegisterDate(): Date {
+    return this.registerDate;
+  }
+  // public setRegisterDate(value: Date) {
+  //   this.registerDate = value;
+  // }
+
+  public getCheckInDate(): Date {
+    return this.checkInDate;
+  }
+
+  public getCheckOutDate(): Date {
+    return this.checkOutDate;
+  }
 }

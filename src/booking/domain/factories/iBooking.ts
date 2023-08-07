@@ -4,5 +4,7 @@ export interface iBooking {
     numberOfGuests: number,
     propertyId: string,
     guestId: string,
+    checkInDate: Date,
+    checkOutDate: Date,
   );
 }

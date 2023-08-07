@@ -18,6 +18,8 @@ export class BookingMapper {
       bookingDocumentSchema.numberOfGuests,
       bookingDocumentSchema.propertyId,
       '1232',
+      bookingDocumentSchema.checkInDate,
+      bookingDocumentSchema.checkOutDate,
     );
   }
 

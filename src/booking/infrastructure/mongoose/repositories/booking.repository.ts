@@ -23,6 +23,11 @@ export class BookingRepository implements iBookingRepository {
       numberOfGuests: booking.getNumberOfGuests(),
       costByNight: booking.getCostByNight(),
       totalCost: booking.getTotalCost().getAmount(),
+      bookingState: booking.getBookingState(),
+      paymentState: booking.getPaymentState(),
+      registerDate: booking.getRegisterDate(),
+      checkInDate: booking.getCheckInDate(),
+      checkOutDate: booking.getCheckOutDate(),
     });
 
     newBooking.save();

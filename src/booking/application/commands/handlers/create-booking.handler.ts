@@ -36,6 +36,8 @@ export class CreateBookingHandler
         createBookingRequest.numberOfGuests,
         createBookingRequest.propertyId,
         '123123',
+        createBookingRequest.checkInDate,
+        createBookingRequest.checkOutDate,
       );
 
       const booking = this.publisher.mergeObjectContext(
