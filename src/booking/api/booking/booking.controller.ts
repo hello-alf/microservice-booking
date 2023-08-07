@@ -1,18 +1,17 @@
 import { Body, Controller, Post, Get } from '@nestjs/common';
-import { MenuService } from '../services/menu.service';
 import { CreateBookingDto } from '../../application/dtos/booking.dto';
 
-@Controller('menu')
-export class MenuController {
-  constructor(private readonly menuService: MenuService) {}
+@Controller('booking')
+export class BookingController {
+  constructor() {}
 
   @Get('/')
   findAll() {
-    return this.menuService.findAll();
+    return [];
   }
 
   @Post()
   create(@Body() payload: CreateBookingDto) {
-    return this.menuService.createPizza(payload);
+    return { hola: 'mundo' };
   }
 }
