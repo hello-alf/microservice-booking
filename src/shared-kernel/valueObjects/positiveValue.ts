@@ -10,4 +10,8 @@ export class PositiveValue extends ValueObject {
     }
     this.value = value;
   }
+
+  getValue(): number {
+    return this.value;
+  }
 }

@@ -1,5 +1,5 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetBookingsQuery } from '../impl';
+import { GetBookingsQuery } from '../impl/get-bookings.query';
 import { BookingRepository } from '../../../infrastructure/mongoose/repositories/booking.repository';
 
 @QueryHandler(GetBookingsQuery)

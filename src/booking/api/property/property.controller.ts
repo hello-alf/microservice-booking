@@ -2,7 +2,7 @@ import { Body, Controller, Post, Get } from '@nestjs/common';
 import { CreatePropertyDto } from '../../application/dtos/property.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreatePropertyCommand } from '../../application/commands/impl/create-property.command';
-import { GetBookingsQuery } from '../../application/queries/impl';
+import { GetPropertiesQuery } from '../../application/queries/impl/get-properties.query';
 
 @Controller('property')
 export class PropertyController {
@@ -13,7 +13,7 @@ export class PropertyController {
 
   @Get('/')
   findAll() {
-    return this.queryBus.execute(new GetBookingsQuery());
+    return this.queryBus.execute(new GetPropertiesQuery());
   }
 
   @Post()

@@ -2,7 +2,7 @@ import { Body, Controller, Post, Get } from '@nestjs/common';
 import { CreateBookingDto } from '../../application/dtos/booking.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateBookingCommand } from '../../application/commands/impl/create-booking.command';
-import { GetBookingsQuery } from '../../application/queries/impl';
+import { GetBookingsQuery } from '../../application/queries/impl/get-bookings.query';
 
 @Controller('booking')
 export class BookingController {

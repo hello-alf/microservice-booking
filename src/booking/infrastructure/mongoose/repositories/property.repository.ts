@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 
 import { PropertyModelSchema } from '../schemas/property.schema';
 import { iPropertyRepository } from '../../../domain/repositories/iProperty';
-import { Property } from 'src/booking/domain/model/property.model';
+import { Property } from '../../../domain/model/property.model';
 import { PropertyMapper } from '../mapper/property.mapper';
 
 @Injectable()
@@ -16,10 +16,11 @@ export class PropertyRepository implements iPropertyRepository {
     private readonly propertyMapper: PropertyMapper,
   ) {}
 
-  save = (property: any): Property => {
+  save = (property: Property): Property => {
     const newProperty = new this.propertyModel({
       _id: new ObjectId(),
-      ...property,
+      name: property.getName(),
+      pricePerNight: property.getPricePerNight().getValue(),
     });
 
     newProperty.save();
@@ -29,5 +30,9 @@ export class PropertyRepository implements iPropertyRepository {
 
   findById = (id: string): Promise<PropertyModelSchema> => {
     return this.propertyModel.findById(id).exec();
+  };
+
+  findAll = (): Promise<PropertyModelSchema[]> => {
+    return this.propertyModel.find().exec();
   };
 }
