@@ -7,7 +7,7 @@ export class CreatePropertyHandler
   implements ICommandHandler<CreatePropertyCommand>
 {
   constructor(
-    private readonly propertytRepository: PropertyRepository,
+    private readonly propertyRepository: PropertyRepository,
     private readonly publisher: EventPublisher,
   ) {}
 
@@ -15,7 +15,7 @@ export class CreatePropertyHandler
     const { createPropertyRequest } = command;
 
     const property = this.publisher.mergeObjectContext(
-      await this.propertytRepository.save(createPropertyRequest),
+      await this.propertyRepository.save(createPropertyRequest),
     );
 
     property.commit();
