@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetBookingsQuery } from '../impl';
-import { BookingRepository } from '../../../domain/repositories/bookingRepository';
+import { BookingRepository } from '../../../infrastructure/mongoose/repositories/booking.repository';
 
 @QueryHandler(GetBookingsQuery)
 export class GetBookingsHandler implements IQueryHandler<GetBookingsQuery> {

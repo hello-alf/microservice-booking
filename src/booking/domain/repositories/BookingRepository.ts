@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
 import { Booking } from '../model/booking.model';
 
-@Injectable()
-export class BookingRepository {
+export interface iBookingRepository {
   newId: () => Promise<string>;
-  save: (account: Booking) => Promise<void>;
-  findById: (id: string) => Promise<Booking | null>;
-  findAll: () => Promise<Booking | null>;
+
+  save: (booking: any) => Promise<void>;
+
+  findById: (id: string) => Promise<any | null>;
+
+  findAll: () => Promise<any[]>;
 }
