@@ -3,6 +3,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { BookingController } from './api/booking/booking.controller';
+import { PropertyController } from './api/property/property.controller';
 import { CommandHandlers } from './application/commands/handlers';
 import { QueryHandlers } from './application/queries/handlers';
 import { BookingRepository } from './infrastructure/mongoose/repositories/booking.repository';
@@ -15,6 +16,7 @@ import {
   PropertyModelSchema,
   PropertySchema,
 } from './infrastructure/mongoose/schemas/property.schema';
+import { PropertyMapper } from './infrastructure/mongoose/property.mapper';
 
 @Module({
   imports: [
@@ -32,12 +34,13 @@ import {
       },
     ]),
   ],
-  controllers: [BookingController],
+  controllers: [BookingController, PropertyController],
   providers: [
     BookingRepository,
     PropertyRepository,
     ...CommandHandlers,
     ...QueryHandlers,
+    PropertyMapper,
   ],
 })
 export class BookingModule {}
