@@ -10,6 +10,6 @@ export class CreatePropertyDto {
   @IsNumber()
   @IsNotEmpty()
   @IsPositive()
-  @ApiProperty({ description: `number og guests` })
+  @ApiProperty({ description: `number of guests` })
   readonly pricePerNight: number;
 }
