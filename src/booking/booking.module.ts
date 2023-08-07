@@ -16,7 +16,7 @@ import {
   PropertyModelSchema,
   PropertySchema,
 } from './infrastructure/mongoose/schemas/property.schema';
-import { PropertyMapper } from './infrastructure/mongoose/property.mapper';
+import { PropertyMapper } from './infrastructure/mongoose/mapper/property.mapper';
 
 @Module({
   imports: [

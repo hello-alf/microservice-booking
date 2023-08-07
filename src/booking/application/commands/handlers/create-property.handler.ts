@@ -13,12 +13,13 @@ export class CreatePropertyHandler
 
   async execute(command: CreatePropertyCommand) {
     const { createPropertyRequest } = command;
-    console.log('createPropertyRequest', createPropertyRequest);
 
     const property = this.publisher.mergeObjectContext(
       await this.propertytRepository.save(createPropertyRequest),
     );
 
     property.commit();
+
+    return property;
   }
 }

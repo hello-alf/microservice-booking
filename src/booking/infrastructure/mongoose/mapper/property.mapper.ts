@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Property } from '../../domain/model/property.model';
-import { PropertyModelSchema } from './schemas/property.schema';
+import { Property } from '../../../domain/model/property.model';
+import { PropertyModelSchema } from '../schemas/property.schema';
 
 @Injectable()
 export class PropertyMapper {

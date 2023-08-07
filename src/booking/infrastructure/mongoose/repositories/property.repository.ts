@@ -6,7 +6,7 @@ import { ObjectId } from 'mongodb';
 import { PropertyModelSchema } from '../schemas/property.schema';
 import { iPropertyRepository } from '../../../domain/repositories/iProperty';
 import { Property } from 'src/booking/domain/model/property.model';
-import { PropertyMapper } from '../property.mapper';
+import { PropertyMapper } from '../mapper/property.mapper';
 
 @Injectable()
 export class PropertyRepository implements iPropertyRepository {

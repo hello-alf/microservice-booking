@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { Booking } from '../../domain/model/booking.model';
-import { BookingModelSchema } from './schemas/booking.schema';
+import { Booking } from '../../../domain/model/booking.model';
+import { BookingModelSchema } from '../schemas/booking.schema';
 
 @Injectable()
 export class BookingMapper {
