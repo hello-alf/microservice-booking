@@ -1,4 +1,7 @@
-import { NotFoundException } from '@nestjs/common';
+import {
+  NotFoundException,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
 import { BadRequestException } from '@nestjs/common';
 
@@ -22,7 +25,6 @@ export class CreateBookingHandler
   async execute(command: CreateBookingCommand) {
     try {
       const { createBookingRequest } = command;
-      console.log('createBookingRequest', createBookingRequest);
 
       const property = await this.propertyRepository.findById(
         createBookingRequest.propertyId,
@@ -30,6 +32,18 @@ export class CreateBookingHandler
 
       if (!property)
         throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
+
+      const availableBooking =
+        await this.bookingRepository.findAvailableBooking(
+          createBookingRequest.propertyId,
+          createBookingRequest.checkInDate,
+          createBookingRequest.checkOutDate,
+        );
+
+      if (availableBooking.length > 0)
+        throw new UnprocessableEntityException(BookingError.BUSY_BOOKING);
+
+      console.log('handler 0001');
 
       const bookingObject = this.bookingFactory.createBooking(
         property.pricePerNight,
@@ -40,11 +54,17 @@ export class CreateBookingHandler
         createBookingRequest.checkOutDate,
       );
 
+      console.log('handler 0002');
+
       const booking = this.publisher.mergeObjectContext(
         this.bookingRepository.save(bookingObject),
       );
 
+      console.log('handler 0003');
+
       booking.commit();
+
+      console.log('handler 0004');
 
       return booking;
     } catch (error) {

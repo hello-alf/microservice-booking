@@ -35,6 +35,27 @@ export class BookingRepository implements iBookingRepository {
     return this.bookingMapper.mapToDomain(newBooking);
   };
 
+  findAvailableBooking = (
+    id: string,
+    checkIn: Date,
+    checkOut: Date,
+  ): Promise<BookingModelSchema[]> => {
+    console.log('checkIn', checkIn);
+    console.log('checkOut', checkOut);
+
+    return this.bookingModel.find({
+      propertyId: id,
+      $or: [
+        {
+          checkInDate: { $gte: new Date(checkIn), $lt: new Date(checkOut) },
+        },
+        {
+          checkOutDate: { $gt: new Date(checkIn), $lte: new Date(checkOut) },
+        },
+      ],
+    });
+  };
+
   findById: (id: string) => Promise<BookingModelSchema | null>;
 
   findAll = (): Promise<BookingModelSchema[]> => {
