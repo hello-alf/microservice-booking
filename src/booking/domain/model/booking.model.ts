@@ -60,16 +60,6 @@ export class Booking extends AggregateRoot {
     this.apply(new BookingPendingEvent(this.id));
   }
 
-  // public checkIn(checkInDate: Date): void {
-  //   this.checkInDate = checkInDate;
-  //   this.apply(new CheckInEvent(this.id));
-  // }
-
-  // public checkOut(checkOutDate: Date): void {
-  //   this.checkOutDate = checkOutDate;
-  //   this.apply(new CheckOutEvent(this.id));
-  // }
-
   public confirmBooking(): void {
     if (
       [BookingState.CONFIRMED, BookingState.CANCELLED].includes(
@@ -90,6 +80,7 @@ export class Booking extends AggregateRoot {
         `El estado ya esta ${BookingState.CANCELLED}`,
       );
     }
+
     this.bookingState = BookingState.CANCELLED;
     this.apply(new BookingCancelEvent(this.id));
   }
@@ -100,6 +91,7 @@ export class Booking extends AggregateRoot {
         `El pago ya fue realizado previamente`,
       );
     }
+
     this.paymentState = PaymentState.COMPLETE;
     this.apply(new PaymentCompleteEvent(this.id));
   }
@@ -108,6 +100,7 @@ export class Booking extends AggregateRoot {
     if (this.paymentState !== PaymentState.PENDING) {
       throw new UnprocessableEntityException(`El pago no esta pendiente`);
     }
+
     this.paymentState = PaymentState.NO_FUNDS;
     this.apply(new PaymentNoFundsEvent(this.id));
   }
@@ -118,6 +111,7 @@ export class Booking extends AggregateRoot {
         `No se puede revertir el pago porque no se completo`,
       );
     }
+
     this.paymentState = PaymentState.REVERTED;
     this.apply(new PaymentRevertedEvent(this.id));
   }
@@ -128,6 +122,7 @@ export class Booking extends AggregateRoot {
         `Los huespedes a adicionar deben ser mayores o iguales a uno`,
       );
     }
+
     this.numberOfGuests = numberOfGuests;
   }
 
@@ -149,6 +144,10 @@ export class Booking extends AggregateRoot {
 
   public getBookingState(): BookingState {
     return this.bookingState;
+  }
+
+  public setBookingState(state): void {
+    this.bookingState = state;
   }
 
   public getPaymentState(): PaymentState {

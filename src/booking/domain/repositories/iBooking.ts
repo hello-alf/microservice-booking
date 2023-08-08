@@ -9,7 +9,7 @@ export interface iBookingRepository {
     checkOut: Date,
   ) => Promise<any[]>;
 
-  findById: (id: string) => Promise<any | null>;
+  findById: (id: string) => any;
 
   findAll: () => Promise<any[]>;
 }

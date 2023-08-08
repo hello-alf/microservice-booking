@@ -13,7 +13,7 @@ export class BookingMapper {
   ) {}
 
   public mapToDomain(bookingDocumentSchema: BookingModelSchema): Booking {
-    return new Booking(
+    const booking = new Booking(
       bookingDocumentSchema.costByNight,
       bookingDocumentSchema.numberOfGuests,
       bookingDocumentSchema.propertyId,
@@ -21,6 +21,12 @@ export class BookingMapper {
       bookingDocumentSchema.checkInDate,
       bookingDocumentSchema.checkOutDate,
     );
+
+    if ('bookingState' in booking) {
+      booking.setBookingState(bookingDocumentSchema.bookingState);
+    }
+
+    return booking;
   }
 
   public mapToEntity(bookingEntity: Booking): BookingModelSchema {

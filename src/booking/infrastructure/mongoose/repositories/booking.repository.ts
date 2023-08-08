@@ -54,7 +54,23 @@ export class BookingRepository implements iBookingRepository {
     });
   };
 
-  findById: (id: string) => Promise<BookingModelSchema | null>;
+  findById = async (id: string): Promise<Booking> => {
+    const objectId = new ObjectId(id);
+
+    const booking = await this.bookingModel.findById(objectId).exec();
+
+    return this.bookingMapper.mapToDomain(booking);
+  };
+
+  findOneAndUpdate = async (id: string, payload: any): Promise<Booking> => {
+    const objectId = new ObjectId(id);
+
+    const booking = await this.bookingModel
+      .findOneAndUpdate({ _id: objectId }, { $set: payload }, { new: true })
+      .exec();
+
+    return this.bookingMapper.mapToDomain(booking);
+  };
 
   findAll = (): Promise<BookingModelSchema[]> => {
     return this.bookingModel.find().exec();
