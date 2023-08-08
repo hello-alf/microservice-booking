@@ -86,6 +86,12 @@ export class Booking extends AggregateRoot {
   }
 
   public completePayment(): void {
+    if (this.bookingState === BookingState.CANCELLED) {
+      throw new UnprocessableEntityException(
+        `No se puedo completar el pago de una reserva completada`,
+      );
+    }
+
     if (this.paymentState === PaymentState.COMPLETE) {
       throw new UnprocessableEntityException(
         `El pago ya fue realizado previamente`,
@@ -152,6 +158,10 @@ export class Booking extends AggregateRoot {
 
   public getPaymentState(): PaymentState {
     return this.paymentState;
+  }
+
+  public setPaymentState(state): void {
+    this.paymentState = state;
   }
 
   public getRegisterDate(): Date {

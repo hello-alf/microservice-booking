@@ -26,6 +26,10 @@ export class BookingMapper {
       booking.setBookingState(bookingDocumentSchema.bookingState);
     }
 
+    if ('paymentState' in booking) {
+      booking.setPaymentState(bookingDocumentSchema.paymentState);
+    }
+
     return booking;
   }
 
