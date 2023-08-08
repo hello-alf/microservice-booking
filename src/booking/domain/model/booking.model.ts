@@ -6,6 +6,7 @@ import { PriceValue } from '../../../shared-kernel/valueObjects/priceValue';
 import { Currency } from '../../../shared-kernel/valueObjects/currency';
 import { BookingState } from './bookingState.enum';
 import { PaymentState } from './paymentState.enum';
+import { Check } from '../valueObjects/check.valueObject';
 
 import { BookingPendingEvent } from '../events/bookingPendingEvent';
 import { BookingConfirmEvent } from '../events/bookingConfirmEvent';
@@ -25,9 +26,9 @@ export class Booking extends AggregateRoot {
   private paymentState: PaymentState;
   private registerDate: Date;
   private numberOfGuests: number;
+  private numberOfDays: number;
   private costByNight: number;
-  private checkInDate: Date;
-  private checkOutDate: Date;
+  private checkInOut: Check;
 
   constructor(
     costByNight: number,
@@ -42,8 +43,13 @@ export class Booking extends AggregateRoot {
     this.id = uuidv4();
     this.propertyId = propertyId;
     this.guestId = guestId;
+    this.checkInOut = new Check(checkInDate, checkOutDate);
+    this.numberOfDays = this.checkInOut.getNumberOfDays();
+
+    const bookingTotalDayPrice = costByNight * this.numberOfDays;
+
     this.totalCost = new PriceValue(
-      costByNight * numberOfGuests,
+      bookingTotalDayPrice * numberOfGuests,
       new Currency('BOB'),
     );
     this.bookingState = BookingState.PENDING;
@@ -51,8 +57,6 @@ export class Booking extends AggregateRoot {
     this.registerDate = new Date();
     this.numberOfGuests = numberOfGuests;
     this.costByNight = costByNight;
-    this.checkInDate = checkInDate;
-    this.checkOutDate = checkOutDate;
     this.apply(new BookingPendingEvent(this.id));
   }
 
@@ -130,38 +134,22 @@ export class Booking extends AggregateRoot {
   public getNumberOfGuests(): number {
     return this.numberOfGuests;
   }
-  // public setNumberOfGuests(value: number) {
-  //   this.numberOfGuests = value;
-  // }
 
   public getPropertyId(): string {
     return this.propertyId;
   }
 
-  // public setPropertyId(value: string): void {
-  //   this.propertyId = value;
-  // }
-
   public getCostByNight(): number {
     return this.costByNight;
   }
-  // public setCostByNight(value: number) {
-  //   this.costByNight = value;
-  // }
 
   public getTotalCost(): PriceValue {
     return this.totalCost;
   }
-  // public setTotalCost(value: PriceValue) {
-  //   this.totalCost = value;
-  // }
 
   public getBookingState(): BookingState {
     return this.bookingState;
   }
-  // public setBookingState(value: BookingState) {
-  //   this.bookingState = value;
-  // }
 
   public getPaymentState(): PaymentState {
     return this.paymentState;
@@ -170,15 +158,12 @@ export class Booking extends AggregateRoot {
   public getRegisterDate(): Date {
     return this.registerDate;
   }
-  // public setRegisterDate(value: Date) {
-  //   this.registerDate = value;
-  // }
 
-  public getCheckInDate(): Date {
-    return this.checkInDate;
+  public getCheckInOut(): Check {
+    return this.checkInOut;
   }
 
-  public getCheckOutDate(): Date {
-    return this.checkOutDate;
+  public getNumberOfDays(): number {
+    return this.numberOfDays;
   }
 }

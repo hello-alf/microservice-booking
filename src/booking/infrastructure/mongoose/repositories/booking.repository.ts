@@ -21,13 +21,14 @@ export class BookingRepository implements iBookingRepository {
       _id: new ObjectId(),
       propertyId: booking.getPropertyId(),
       numberOfGuests: booking.getNumberOfGuests(),
+      numberOfDays: booking.getNumberOfDays(),
       costByNight: booking.getCostByNight(),
       totalCost: booking.getTotalCost().getAmount(),
       bookingState: booking.getBookingState(),
       paymentState: booking.getPaymentState(),
       registerDate: booking.getRegisterDate(),
-      checkInDate: booking.getCheckInDate(),
-      checkOutDate: booking.getCheckOutDate(),
+      checkInDate: booking.getCheckInOut().getCheckInDate(),
+      checkOutDate: booking.getCheckInOut().getCheckOutDate(),
     });
 
     newBooking.save();
@@ -40,9 +41,6 @@ export class BookingRepository implements iBookingRepository {
     checkIn: Date,
     checkOut: Date,
   ): Promise<BookingModelSchema[]> => {
-    console.log('checkIn', checkIn);
-    console.log('checkOut', checkOut);
-
     return this.bookingModel.find({
       propertyId: id,
       $or: [

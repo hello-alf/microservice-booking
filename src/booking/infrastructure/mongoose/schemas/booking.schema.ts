@@ -12,6 +12,9 @@ export class BookingModelSchema extends IdentifiableEntitySchema {
   numberOfGuests: number;
 
   @Prop({ required: true })
+  numberOfDays: number;
+
+  @Prop({ required: true })
   costByNight: number;
 
   @Prop({ required: true })

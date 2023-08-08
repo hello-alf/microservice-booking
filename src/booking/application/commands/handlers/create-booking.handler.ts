@@ -43,8 +43,6 @@ export class CreateBookingHandler
       if (availableBooking.length > 0)
         throw new UnprocessableEntityException(BookingError.BUSY_BOOKING);
 
-      console.log('handler 0001');
-
       const bookingObject = this.bookingFactory.createBooking(
         property.pricePerNight,
         createBookingRequest.numberOfGuests,
@@ -54,17 +52,11 @@ export class CreateBookingHandler
         createBookingRequest.checkOutDate,
       );
 
-      console.log('handler 0002');
-
       const booking = this.publisher.mergeObjectContext(
         this.bookingRepository.save(bookingObject),
       );
 
-      console.log('handler 0003');
-
       booking.commit();
-
-      console.log('handler 0004');
 
       return booking;
     } catch (error) {

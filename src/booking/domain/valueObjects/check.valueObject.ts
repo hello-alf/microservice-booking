@@ -23,7 +23,7 @@ export class Check extends ValueObject {
     this.checkIn = checkInDateWithoutTime.setUTCHours(0, 0, 0, 0);
 
     const checkOutDateWithoutTime = new Date(checkOut);
-    checkOutDateWithoutTime.setUTCHours(0, 0, 0, 0);
+    this.checkOut = checkOutDateWithoutTime.setUTCHours(0, 0, 0, 0);
 
     const timeDifference =
       checkOutDateWithoutTime.getTime() - checkInDateWithoutTime.getTime();
