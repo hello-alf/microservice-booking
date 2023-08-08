@@ -129,7 +129,7 @@ export class Booking extends AggregateRoot {
       );
     }
 
-    this.numberOfGuests = numberOfGuests;
+    this.numberOfGuests = this.numberOfGuests + numberOfGuests;
   }
 
   public getNumberOfGuests(): number {
