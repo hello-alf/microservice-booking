@@ -28,6 +28,7 @@ describe('PriceValue ValueObject', () => {
   test('PriceValue igual a cero', () => {
     try {
       new PriceValue(0, currency);
+      expect(true).toBeFalsy();
     } catch (error) {
       expect(() => {
         throw error;
@@ -38,6 +39,7 @@ describe('PriceValue ValueObject', () => {
   test('PriceValue menor a cero', () => {
     try {
       new PriceValue(-10, currency);
+      expect(true).toBeFalsy();
     } catch (error) {
       expect(() => {
         throw error;
