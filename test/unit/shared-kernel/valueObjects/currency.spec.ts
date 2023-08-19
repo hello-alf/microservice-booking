@@ -4,18 +4,21 @@ const BOB = 'BOB';
 const USD = 'USD';
 
 describe('Currency ValueObject', () => {
-  test('Currency ValueObject correct', () => {
-    const actualCurrency: Currency = new Currency(BOB);
+  let actualCurrency: Currency;
+  let lastCurrency: Currency;
 
-    const lastCurrency: Currency = new Currency(BOB);
+  beforeEach(() => {
+    actualCurrency = new Currency(BOB);
+  });
+
+  test('Currency ValueObject correct', () => {
+    lastCurrency = new Currency(BOB);
 
     expect(actualCurrency.equalTo(lastCurrency)).toBeTruthy();
   });
 
   test('Currency ValueObject different', () => {
-    const actualCurrency: Currency = new Currency(BOB);
-
-    const lastCurrency: Currency = new Currency(USD);
+    lastCurrency = new Currency(USD);
 
     expect(actualCurrency.equalTo(lastCurrency)).toBeFalsy();
   });
