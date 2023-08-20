@@ -123,7 +123,7 @@ export class Booking extends AggregateRoot {
   }
 
   public addNumberOfGuests(numberOfGuests: number): void {
-    if (this.numberOfGuests <= 0) {
+    if (numberOfGuests <= 0) {
       throw new UnprocessableEntityException(
         `Los huespedes a adicionar deben ser mayores o iguales a uno`,
       );

@@ -2,7 +2,7 @@ import { Property } from '../../../../../src/booking/domain/model/property.model
 import { PositiveValue } from '../../../../../src/shared-kernel/valueObjects/positiveValue';
 
 describe('Property', () => {
-  it('Crear objeto tipo Property', () => {
+  test('Crear objeto tipo Property', () => {
     const property: Property = new Property('Departamento en Sopocachi', 95);
 
     expect(property).toBeInstanceOf(Property);
@@ -10,7 +10,7 @@ describe('Property', () => {
     expect(property.getPricePerNight().getValue()).toBe(95);
   });
 
-  it('Actualizar Nombre Property', () => {
+  test('Actualizar Nombre Property', () => {
     const property: Property = new Property('Casa en Miraflores', 155);
 
     expect(property).toBeInstanceOf(Property);
@@ -20,7 +20,7 @@ describe('Property', () => {
     expect(property.getName()).toBe('Casa amoblada en Miraflores');
   });
 
-  it('Actualizar Precio Property', () => {
+  test('Actualizar Precio Property', () => {
     const property: Property = new Property('Garzonier Alto Obrajes', 120);
 
     expect(property).toBeInstanceOf(Property);
