@@ -1,8 +1,5 @@
 import { IsString, IsNotEmpty, IsNumber, IsDateString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-// import { CreateDetailDto } from './detail.dtos';
-// import { CreateCustomizedDto } from './customized.dtos';
 
 export class CreateBookingDto {
   @IsString()
