@@ -7,4 +7,8 @@ export class Guest extends AggregateRoot {
     super();
     this.name = name;
   }
+
+  public getName(): string {
+    return this.name;
+  }
 }

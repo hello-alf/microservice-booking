@@ -70,4 +70,24 @@ describe('Check ValueObject', () => {
       );
     }
   });
+
+  test('Verificar fecha checkin', () => {
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    const checkDates: Check = new Check(today, tomorrow);
+
+    expect(checkDates.getCheckInDate()).toBe(today);
+  });
+
+  test('Verificar fecha checkout', () => {
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    const checkDates: Check = new Check(today, tomorrow);
+
+    expect(checkDates.getCheckOutDate()).toBe(tomorrow);
+  });
 });

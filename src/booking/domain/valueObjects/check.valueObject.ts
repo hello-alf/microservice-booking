@@ -29,10 +29,6 @@ export class Check extends ValueObject {
       checkOutDateWithoutTime.getTime() - checkInDateWithoutTime.getTime();
 
     this.numberOfDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
-
-    if (this.numberOfDays <= 0) {
-      throw new Error('El número de días de estadía debe ser mayor a cero');
-    }
   }
 
   public getCheckInDate(): Date {

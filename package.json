@@ -78,7 +78,7 @@
       "!**/dist/**",
       "!.eslintrc.js"
     ],
-    "coverageDirectory": "./coverage",
+    "coverageDirectory": "./test/reports/coverage",
     "testEnvironment": "node"
   }
 }
