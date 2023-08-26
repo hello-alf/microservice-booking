@@ -7,11 +7,17 @@ import { AppModule } from '../../../src/app.module';
 let app;
 let response;
 
-// Given('a user exists with name {string}', async (url: string, table) => {
-//   const testData = table.rowsHash();
-//   const payload = { name: testData.name, value: testData.value };
-//   response = await request(app.getHttpServer()).post(url).send(payload);
-// });
+Given(
+  'a POST request is made to {string} with the following data:',
+  async (url: string, table) => {
+    const testData = table.rowsHash();
+    const payload = {
+      name: testData.name,
+      pricePerNight: testData.pricePerNight,
+    };
+    response = await request(app.getHttpServer()).post(url).send(payload);
+  },
+);
 
 When('a GET request is made to {string}', async function (url: string) {
   // Write code here that turns the phrase above into concrete actions
