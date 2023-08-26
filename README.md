@@ -40,4 +40,7 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+
+# integration tests
+$ npm run test:integration
 ```
