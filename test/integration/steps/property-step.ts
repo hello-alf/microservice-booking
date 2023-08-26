@@ -20,7 +20,6 @@ Given(
 );
 
 When('a GET request is made to {string}', async function (url: string) {
-  // Write code here that turns the phrase above into concrete actions
   response = await request(app.getHttpServer()).get(url);
 });
 
