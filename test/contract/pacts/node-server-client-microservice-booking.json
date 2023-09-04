@@ -1,0 +1,153 @@
+{
+  "consumer": {
+    "name": "node-server-client"
+  },
+  "interactions": [
+    {
+      "description": "Crear propiedad",
+      "providerStates": [
+        {
+          "name": "crear propiedad"
+        }
+      ],
+      "request": {
+        "body": {
+          "name": "Departamento en Sopocachi",
+          "pricePerNight": 125
+        },
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "method": "POST",
+        "path": "/property"
+      },
+      "response": {
+        "body": {
+          "name": "Departamento en Sopocachi",
+          "pricePerNight": {
+            "value": 125
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "listar todas las propiedades",
+      "providerStates": [
+        {
+          "name": "listar propiedades"
+        }
+      ],
+      "request": {
+        "headers": {
+          "Accept": "application/json"
+        },
+        "method": "GET",
+        "path": "/property"
+      },
+      "response": {
+        "body": [
+          {
+            "__v": 0,
+            "_id": "64d1275e8695192bab9a1ec4",
+            "name": "Mono ambiente centrico",
+            "pricePerNight": 90
+          },
+          {
+            "__v": 0,
+            "_id": "64d1489fdb349b6cd3dafb92",
+            "name": "Departamento en Achumani",
+            "pricePerNight": 150
+          },
+          {
+            "__v": 0,
+            "_id": "64d148a8db349b6cd3dafb94",
+            "name": "Departamento en San Miguel",
+            "pricePerNight": 150
+          }
+        ],
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "status": 200
+      }
+    },
+    {
+      "description": "Crear propiedad",
+      "providerStates": [
+        {
+          "name": "crear propiedad"
+        }
+      ],
+      "request": {
+        "body": {
+          "name": "Departamento en Sopocachi",
+          "pricePerNight": 125
+        },
+        "headers": {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        "method": "POST",
+        "path": "/property"
+      },
+      "response": {
+        "body": {
+          "name": "Departamento en Sopocachi",
+          "pricePerNight": {
+            "value": 125
+          }
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "body": {
+            "$": {
+              "combine": "AND",
+              "matchers": [
+                {
+                  "match": "type"
+                }
+              ]
+            }
+          },
+          "header": {}
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "12.1.0"
+    },
+    "pactRust": {
+      "ffi": "0.4.7",
+      "models": "1.1.9"
+    },
+    "pactSpecification": {
+      "version": "3.0.0"
+    }
+  },
+  "provider": {
+    "name": "microservice-booking"
+  }
+}

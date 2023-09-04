@@ -39,7 +39,6 @@ BeforeAll(async () => {
   await app.init();
 });
 
-// Hook para cerrar la aplicación NestJS después de las pruebas
 AfterAll(async () => {
   await app.close();
 });
