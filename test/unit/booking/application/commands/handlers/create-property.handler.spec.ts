@@ -5,107 +5,60 @@ import { CreatePropertyHandler } from '../../../../../../src/booking/application
 import { PropertyRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository';
 import { CreatePropertyCommand } from '../../../../../../src/booking/application/commands/impl/create-property.command';
 import { PropertyFactory } from '../../../../../../src/booking/domain/factories/property.factory';
+import { iPropertyRepository } from 'src/booking/domain/repositories/iProperty';
 
-jest.mock(
-  '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository',
-);
-jest.mock('@nestjs/cqrs');
+// Mocks para las dependencias
+class MockPropertyRepository implements iPropertyRepository {
+  findById: (id: string) => Promise<any>;
+  findAll: () => Promise<any[]>;
+  async save() {
+    // Implementa la lógica de save simulada
+  }
+}
+
+class MockPropertyFactory {
+  createProperty() {
+    // Implementa la lógica de createProperty simulada
+  }
+}
+
+class MockEventPublisher {
+  mergeObjectContext() {
+    // Implementa la lógica de mergeObjectContext simulada
+  }
+}
 
 describe('CreatePropertyHandler', () => {
   let createPropertyHandler: CreatePropertyHandler;
-  let propertyRepository: PropertyRepository;
-  let eventPublisher: EventPublisher;
-  let propertyFactory: PropertyFactory;
+  let propertyRepository: MockPropertyRepository;
+  let propertyFactory: MockPropertyFactory;
+  let eventPublisher: MockEventPublisher;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        CreatePropertyHandler,
-        PropertyRepository,
-        EventPublisher,
-        PropertyFactory,
-      ],
-    }).compile();
+  beforeEach(() => {
+    propertyRepository = new MockPropertyRepository();
+    propertyFactory = new MockPropertyFactory();
+    eventPublisher = new MockEventPublisher();
 
-    createPropertyHandler = module.get<CreatePropertyHandler>(
-      CreatePropertyHandler,
+    createPropertyHandler = new CreatePropertyHandler(
+      propertyRepository,
+      eventPublisher,
+      propertyFactory,
     );
-    propertyRepository = module.get<PropertyRepository>(PropertyRepository);
-    eventPublisher = module.get<EventPublisher>(EventPublisher);
-    propertyFactory = module.get<PropertyFactory>(PropertyFactory);
   });
 
-  test('Handler definido', () => {
-    expect(createPropertyHandler).toBeDefined();
+  it('should create a property', async () => {
+    // Define el comportamiento simulado de las dependencias en los mocks
+
+    // Ejecuta el método execute del manejador con un comando simulado
+    const command = new CreatePropertyCommand({
+      name: 'Departmento prueba',
+      pricePerNight: 400,
+    });
+    const result = await createPropertyHandler.execute(command);
+
+    // Verifica el resultado esperado, por ejemplo, que result sea una instancia de Property
+    expect(result).toBeInstanceOf(Property);
   });
 
-  // test('Crear propiedad', async () => {
-  //   const createPropertyRequest = {
-  //     name: 'Test Property',
-  //     pricePerNight: 100,
-  //   };
-
-  //   const mockCreatedProperty = {
-  //     name: 'Casa Sopocachi',
-  //     pricePerNight: 150,
-  //   };
-
-  //   // Mock propertyFactory.createProperty
-  //   propertyFactory.createProperty = jest
-  //     .fn()
-  //     .mockReturnValue(mockCreatedProperty);
-
-  //   // Mock propertyRepository.save
-  //   propertyRepository.save = jest.fn().mockResolvedValue(mockCreatedProperty);
-
-  //   // Mock publisher.mergeObjectContext
-  //   eventPublisher.mergeObjectContext = jest
-  //     .fn()
-  //     .mockReturnValue(mockCreatedProperty);
-
-  //   const createPropertyCommand = new CreatePropertyCommand(
-  //     createPropertyRequest,
-  //   );
-
-  //   const result = await createPropertyHandler.execute(createPropertyCommand);
-
-  //   expect(result).toBe(mockCreatedProperty);
-
-  //   // Verify that the methods were called with the expected arguments
-  //   expect(propertyFactory.createProperty).toHaveBeenCalledWith(
-  //     createPropertyRequest.name,
-  //     createPropertyRequest.pricePerNight,
-  //   );
-
-  //   expect(propertyRepository.save).toHaveBeenCalledWith(mockCreatedProperty);
-
-  //   expect(eventPublisher.mergeObjectContext).toHaveBeenCalledWith(
-  //     mockCreatedProperty,
-  //   );
-  // });
-
-  // test('should throw a BadRequestException on error', async () => {
-  //   const createPropertyRequest = {
-  //     name: 'Test Property',
-  //     pricePerNight: 100,
-  //   };
-
-  //   const errorMessage = 'Something went wrong';
-
-  //   // Mock propertyFactory.createProperty to throw an error
-  //   propertyFactory.createProperty = jest.fn().mockImplementation(() => {
-  //     throw new Error(errorMessage);
-  //   });
-
-  //   const createPropertyCommand = new CreatePropertyCommand(
-  //     createPropertyRequest,
-  //   );
-
-  //   try {
-  //     await createPropertyHandler.execute(createPropertyCommand);
-  //   } catch (error) {
-  //     expect(error).toBeInstanceOf(BadRequestException);
-  //     expect(error.message).toBe(errorMessage);
-  //   }
-  // });
+  // Agrega pruebas adicionales según sea necesario para cubrir otros casos y condiciones.
 });

@@ -1,7 +1,7 @@
 import { iBusinessRule } from './iBusinessRule';
 import { BusinessRuleValidationException } from './bussinessRuleValidationException';
 
-export abstract class ValueObject {
+export class ValueObject {
   protected checkRule(rule: iBusinessRule): void {
     if (!rule) {
       throw new Error('Rule can not be null');
