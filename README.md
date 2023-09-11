@@ -12,9 +12,9 @@ https://youtu.be/PzoVRmwHdvk
 
 ## Screenshots de Tests
 
-https://drive.google.com/file/d/1iYnZFjV-va7S9iZzPs7pu-CT43JjW66f/view
+![image](https://drive.google.com/uc?export=view&id=1iYnZFjV-va7S9iZzPs7pu-CT43JjW66f)
 
-https://drive.google.com/file/d/1MNqVXDdhPqse629nz_RHlKGbuWl7Ol6u/view
+![image](https://drive.google.com/uc?export=view&id=1MNqVXDdhPqse629nz_RHlKGbuWl7Ol6u)
 
 ## Instalación
 
