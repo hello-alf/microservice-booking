@@ -31,7 +31,6 @@ describe('Database Configuration', () => {
     };
 
     const config = databaseConfig();
-    console.log('config', config);
 
     expect(config).toMatchObject(expectedConfig);
   });
