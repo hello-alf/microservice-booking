@@ -1,0 +1,5 @@
+# .*
+!.env
+!.pylintrc
+node_modules
+Dockerfile

@@ -50,3 +50,16 @@ $ npm run test:cov
 # integration tests
 $ npm run test:integration
 ```
+
+## Docker
+
+```bash
+# crear imagen
+$ docker image build -t helloalf/microservice-booking .
+
+# correr contenedor
+$ docker container run -d --name micro -p 3009:3000 helloalf/microservice-booking
+
+# publicar imagen
+$ docker image push helloalf/microservice-booking
+```
