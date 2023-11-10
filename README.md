@@ -62,4 +62,14 @@ $ docker container run -d --name micro -p 3009:3000 helloalf/microservice-bookin
 
 # publicar imagen
 $ docker image push helloalf/microservice-booking
+
+
+# Crear contexto
+$ docker buildx create --use
+
+# Crear imagen para amd y arm
+$ docker buildx build --platform linux/amd64,linux/arm64 -t helloalf/test2 .
+
+# Subir imagen multiarquitectura
+$ docker buildx build --platform linux/amd64,linux/arm64 -t helloalf/test2 --push .
 ```

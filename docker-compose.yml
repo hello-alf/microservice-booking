@@ -4,17 +4,17 @@ networks:
   booking-net:
 
 services:
-  booking:
-    image: helloalf/microservice-booking
-    environment:
-      - MONGO_PORT=27017
-      - MONGO_HOST=mongo
-    ports:
-      - '3000:3000'
-    depends_on:
-      - mongo
-    networks:
-      - booking-net
+  # booking:
+  #   image: helloalf/microservice-booking
+  #   environment:
+  #     - MONGO_PORT=27017
+  #     - MONGO_HOST=mongo
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - mongo
+  #   networks:
+  #     - booking-net
 
   mongo:
     image: mongo:4.4.4

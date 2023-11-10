@@ -8,14 +8,14 @@ import { BookingState } from './bookingState.enum';
 import { PaymentState } from './paymentState.enum';
 import { Check } from '../valueObjects/check.valueObject';
 
-import { BookingPendingEvent } from '../events/bookingPendingEvent';
-import { BookingConfirmEvent } from '../events/bookingConfirmEvent';
-import { BookingCancelEvent } from '../events/bookingCancelEvent';
+import { BookingPendingResolvedEvent } from '../events/BookingPendingResolvedEvent';
+import { BookingConfirmedEvent } from '../events/bookingConfirmedEvent';
+import { BookingCanceledEvent } from '../events/bookingCanceledEvent';
 import { CheckInEvent } from '../events/checkInEvent';
 import { CheckOutEvent } from '../events/checkOutEvent';
 import { PaymentRevertedEvent } from '../events/paymentRevertedEvent';
-import { PaymentCompleteEvent } from '../events/paymentCompleteEvent';
-import { PaymentNoFundsEvent } from '../events/paymentNoFundsEvent';
+import { PaymentCompletedEvent } from '../events/paymentCompletedEvent';
+import { PaymentNoFundsResolvedEvent } from '../events/PaymentNoFundsResolvedEvent';
 
 export class Booking extends AggregateRoot {
   private id: string;
@@ -57,7 +57,7 @@ export class Booking extends AggregateRoot {
     this.registerDate = new Date();
     this.numberOfGuests = numberOfGuests;
     this.costByNight = costByNight;
-    this.apply(new BookingPendingEvent(this.id));
+    this.apply(new BookingPendingResolvedEvent(this.id));
   }
 
   public confirmBooking(): void {
@@ -71,7 +71,7 @@ export class Booking extends AggregateRoot {
       );
     }
     this.bookingState = BookingState.CONFIRMED;
-    this.apply(new BookingConfirmEvent(this.id));
+    this.apply(new BookingConfirmedEvent(this.id));
   }
 
   public cancelBooking(): void {
@@ -82,7 +82,7 @@ export class Booking extends AggregateRoot {
     }
 
     this.bookingState = BookingState.CANCELLED;
-    this.apply(new BookingCancelEvent(this.id));
+    this.apply(new BookingCanceledEvent(this.id));
   }
 
   public completePayment(): void {
@@ -99,7 +99,7 @@ export class Booking extends AggregateRoot {
     }
 
     this.paymentState = PaymentState.COMPLETE;
-    this.apply(new PaymentCompleteEvent(this.id));
+    this.apply(new PaymentCompletedEvent(this.id));
   }
 
   public noFundsPayment(): void {
@@ -108,7 +108,7 @@ export class Booking extends AggregateRoot {
     }
 
     this.paymentState = PaymentState.NO_FUNDS;
-    this.apply(new PaymentNoFundsEvent(this.id));
+    this.apply(new PaymentNoFundsResolvedEvent(this.id));
   }
 
   public revertedPayment(): void {

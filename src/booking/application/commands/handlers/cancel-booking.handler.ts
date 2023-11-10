@@ -29,6 +29,8 @@ export class CancelBookingHandler
 
       booking.commit();
 
+      // aqui mandar el dato a rabbitmq
+
       return booking;
     } catch (error) {
       throw new BadRequestException(error.message);

@@ -1,5 +1,5 @@
 import { IEvent } from '@nestjs/cqrs';
 
-export class PaymentCompleteEvent implements IEvent {
+export class PaymentCompletedEvent implements IEvent {
   constructor(readonly id: string) {}
 }
