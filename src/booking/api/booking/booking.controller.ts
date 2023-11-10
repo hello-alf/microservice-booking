@@ -6,7 +6,9 @@ import { ConfirmBookingCommand } from '../../application/commands/impl/confirm-b
 import { CancelBookingCommand } from '../../application/commands/impl/cancel-booking.command';
 import { CompleteBookingPaymentCommand } from '../../application/commands/impl/complete-booking-payment.command';
 import { GetBookingsQuery } from '../../application/queries/impl/get-bookings.query';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('booking')
 @Controller('booking')
 export class BookingController {
   constructor(

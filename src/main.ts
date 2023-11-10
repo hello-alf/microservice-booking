@@ -20,7 +20,9 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, options);
 
-  SwaggerModule.setup('/api/docs', app, document);
+  SwaggerModule.setup('/api/docs', app, document, {
+    swaggerOptions: { filter: true },
+  });
 
   await app.listen(3000);
 }
