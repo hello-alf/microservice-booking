@@ -7,6 +7,7 @@ import { CancelBookingCommand } from '../../application/commands/impl/cancel-boo
 import { CompleteBookingPaymentCommand } from '../../application/commands/impl/complete-booking-payment.command';
 import { GetBookingsQuery } from '../../application/queries/impl/get-bookings.query';
 import { ApiTags } from '@nestjs/swagger';
+import { EventPattern, Payload } from '@nestjs/microservices';
 
 @ApiTags('booking')
 @Controller('booking')
@@ -18,7 +19,14 @@ export class BookingController {
 
   @Get('/')
   findAll() {
+    console.log('find all');
     return this.queryBus.execute(new GetBookingsQuery());
+  }
+
+  @EventPattern('demo')
+  async findAllEvent(@Payload() data: any) {
+    console.log('find all event', data);
+    return;
   }
 
   @Post()

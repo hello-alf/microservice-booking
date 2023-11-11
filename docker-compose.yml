@@ -16,6 +16,17 @@ services:
   #   networks:
   #     - booking-net
 
+  rabbitmq:
+    image: rabbitmq:3.9-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - booking-net
+
   mongo:
     image: mongo:4.4.4
     environment:

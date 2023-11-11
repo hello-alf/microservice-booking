@@ -17,6 +17,7 @@ import { Mapper } from './infrastructure/mongoose/mapper';
 import { CommandHandlers } from './application/commands/handlers';
 import { QueryHandlers } from './application/queries/handlers';
 import { Factories } from './domain/factories';
+import { ClientProxyNURBNB } from './infrastructure/proxy/client';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { Factories } from './domain/factories';
     ...QueryHandlers,
     ...Mapper,
     ...Factories,
+    ClientProxyNURBNB,
   ],
 })
 export class BookingModule {}
