@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { BookingController } from './api/booking/booking.controller';
 import { PropertyController } from './api/property/property.controller';
+import { BookingService } from './api/booking-event/booking.service';
 import { Repositories } from './infrastructure/mongoose/repositories';
 import {
   BookingModelSchema,
@@ -18,6 +19,7 @@ import { CommandHandlers } from './application/commands/handlers';
 import { QueryHandlers } from './application/queries/handlers';
 import { Factories } from './domain/factories';
 import { ClientProxyNURBNB } from './infrastructure/proxy/client';
+import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
 @Module({
   imports: [
@@ -34,6 +36,15 @@ import { ClientProxyNURBNB } from './infrastructure/proxy/client';
         schema: PropertySchema,
       },
     ]),
+    RabbitMQModule.forRoot(RabbitMQModule, {
+      exchanges: [
+        {
+          name: 'demostracion',
+          type: 'fanout',
+        },
+      ],
+      uri: 'amqp://localhost:5672',
+    }),
   ],
   controllers: [BookingController, PropertyController],
   providers: [
@@ -42,6 +53,7 @@ import { ClientProxyNURBNB } from './infrastructure/proxy/client';
     ...QueryHandlers,
     ...Mapper,
     ...Factories,
+    BookingService,
     ClientProxyNURBNB,
   ],
 })

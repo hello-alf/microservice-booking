@@ -14,10 +14,10 @@ async function bootstrap() {
     }),
   );
 
-  app.connectMicroservice({
-    transport: Transport.RMQ,
-    options: { urls: ['amqp://localhost:5672'], queue: 'properties' },
-  });
+  // app.connectMicroservice({
+  //   transport: Transport.RMQ,
+  //   options: { urls: ['amqp://localhost:5672'], queue: 'properties' },
+  // });
 
   const options = new DocumentBuilder()
     .setTitle('Booking API')
@@ -31,7 +31,7 @@ async function bootstrap() {
     swaggerOptions: { filter: true },
   });
 
-  await app.startAllMicroservices();
+  // await app.startAllMicroservices();
   await app.listen(3000);
 }
 bootstrap();
