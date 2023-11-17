@@ -4,7 +4,14 @@ import { Property } from '../model/property.model';
 
 @Injectable()
 export class PropertyFactory implements iProperty {
-  createProperty(name: string, pricePerNight: number) {
-    return new Property(name, pricePerNight);
+  createProperty(
+    id: number,
+    name: string,
+    address: string,
+    propertyType: string,
+    city: string,
+    pricePerNight: number,
+  ) {
+    return new Property(id, name, address, propertyType, city, pricePerNight);
   }
 }

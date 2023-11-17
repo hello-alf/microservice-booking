@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { BookingController } from './api/booking/booking.controller';
 import { PropertyController } from './api/property/property.controller';
-import { BookingService } from './api/booking-event/booking.service';
+import { PropertyService } from './api/property-event/property.service';
 import { Repositories } from './infrastructure/mongoose/repositories';
 import {
   BookingModelSchema,
@@ -18,7 +18,6 @@ import { Mapper } from './infrastructure/mongoose/mapper';
 import { CommandHandlers } from './application/commands/handlers';
 import { QueryHandlers } from './application/queries/handlers';
 import { Factories } from './domain/factories';
-import { ClientProxyNURBNB } from './infrastructure/proxy/client';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
 @Module({
@@ -43,7 +42,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           type: 'fanout',
         },
       ],
-      uri: 'amqp://localhost:5672',
+      uri: 'amqps://farhdenj:BilLhsNpcQHME1p2ItwtM5sZImZaqmDC@shrimp.rmq.cloudamqp.com/farhdenj',
     }),
   ],
   controllers: [BookingController, PropertyController],
@@ -53,8 +52,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     ...QueryHandlers,
     ...Mapper,
     ...Factories,
-    BookingService,
-    ClientProxyNURBNB,
+    PropertyService,
   ],
 })
 export class BookingModule {}

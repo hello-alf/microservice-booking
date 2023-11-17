@@ -1,3 +1,10 @@
 export interface iProperty {
-  createProperty(name: string, costo: number);
+  createProperty(
+    id: number,
+    name: string,
+    address: string,
+    propertyType: string,
+    city: string,
+    pricePerNight: number,
+  );
 }

@@ -18,9 +18,12 @@ export class CreatePropertyHandler
   async execute(command: CreatePropertyCommand) {
     try {
       const { createPropertyRequest } = command;
-
       const propertyObject = this.propertyFactory.createProperty(
+        createPropertyRequest.id,
         createPropertyRequest.name,
+        createPropertyRequest.address,
+        createPropertyRequest.propertyType,
+        createPropertyRequest.city,
         createPropertyRequest.pricePerNight,
       );
 

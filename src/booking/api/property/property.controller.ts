@@ -4,17 +4,14 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreatePropertyCommand } from '../../application/commands/impl/create-property.command';
 import { GetPropertiesQuery } from '../../application/queries/impl/get-properties.query';
 import { ApiTags } from '@nestjs/swagger';
-// import { ClientProxyNURBNB } from '../../infrastructure/proxy/client';
 
 @ApiTags('property')
 @Controller('property')
 export class PropertyController {
   constructor(
     private readonly commandBus: CommandBus,
-    private readonly queryBus: QueryBus, // private readonly clientProxy: ClientProxyNURBNB,
+    private readonly queryBus: QueryBus,
   ) {}
-
-  // private clientProxyCustomer = this.clientProxy.clientProxyCustomers;
 
   @Get('/')
   findAll() {

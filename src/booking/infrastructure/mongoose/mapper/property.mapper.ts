@@ -14,14 +14,22 @@ export class PropertyMapper {
 
   public mapToDomain(propertyDocumentSchema: PropertyModelSchema): Property {
     return new Property(
+      propertyDocumentSchema.id,
       propertyDocumentSchema.name,
+      propertyDocumentSchema.address,
+      propertyDocumentSchema.propertyType,
+      propertyDocumentSchema.city,
       propertyDocumentSchema.pricePerNight,
     );
   }
 
   public mapToEntity(propertyEntity: Property): PropertyModelSchema {
     const propertySchema = new this.bookingModel({
+      id: propertyEntity.getId(),
       name: propertyEntity.getName(),
+      address: propertyEntity.getAddress(),
+      propertyType: propertyEntity.getPropertyType(),
+      city: propertyEntity.getCity(),
       pricePerNight: propertyEntity.getPricePerNight(),
     });
     return propertySchema;
