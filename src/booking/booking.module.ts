@@ -20,6 +20,8 @@ import { QueryHandlers } from './application/queries/handlers';
 import { Factories } from './domain/factories';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
+console.log('process.env.RABBITMQ_URI', process.env.RABBITMQ_URI);
+
 @Module({
   imports: [
     CqrsModule,
@@ -41,8 +43,15 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           name: 'demostracion',
           type: 'fanout',
         },
+        {
+          name: 'booking-service',
+          type: 'fanout',
+        },
       ],
-      uri: 'amqps://farhdenj:BilLhsNpcQHME1p2ItwtM5sZImZaqmDC@shrimp.rmq.cloudamqp.com/farhdenj',
+      uri:
+        process.env.RABBITMQ_URI ||
+        'amqps://farhdenj:BilLhsNpcQHME1p2ItwtM5sZImZaqmDC@shrimp.rmq.cloudamqp.com/farhdenj',
+      connectionInitOptions: { timeout: 60000 },
     }),
   ],
   controllers: [BookingController, PropertyController],
