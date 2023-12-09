@@ -40,8 +40,12 @@ describe('BookingController', () => {
 
   test('Crear una propiedad', () => {
     const createPropertyDto: CreatePropertyDto = {
+      id: 10,
       name: 'Casa Sopocachi',
       pricePerNight: 150,
+      address: 'Calle 123',
+      propertyType: 'Casa',
+      city: 'Medellin',
     };
     controller.create(createPropertyDto);
     expect(commandBus.execute).toHaveBeenCalledWith(
