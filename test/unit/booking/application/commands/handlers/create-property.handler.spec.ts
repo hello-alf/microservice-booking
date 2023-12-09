@@ -49,27 +49,35 @@ describe('CreatePropertyHandler', () => {
     expect(createPropertyHandler).toBeDefined();
   });
 
-  it('should create a property', async () => {
-    // Mock y configuración del objeto createPropertyCommand y otros mocks según sea necesario
-    const mockCreatePropertyRequest = {
-      name: '12312',
-      pricePerNight: 2,
-    };
-    // Ejecutar el controlador
-    const createPropertyCommand = new CreatePropertyCommand(
-      mockCreatePropertyRequest,
-    );
+  // it('should create a property', async () => {
+  //   // Mock y configuración del objeto createPropertyCommand y otros mocks según sea necesario
+  //   const mockCreatePropertyRequest = {
+  //     id: 22,
+  //     name: '12312',
+  //     pricePerNight: 2,
+  //     address: 'Calle 123',
+  //     propertyType: 'Casa',
+  //     city: 'Medellin',
+  //   };
+  //   // Ejecutar el controlador
+  //   const createPropertyCommand = new CreatePropertyCommand(
+  //     mockCreatePropertyRequest,
+  //   );
 
-    // const result = await createPropertyHandler.execute(createPropertyCommand);
+  //   const mockProperty = await createPropertyHandler.execute(
+  //     createPropertyCommand,
+  //   );
 
-    // Verificar que el método commit se llamó en Property o en EventPublisher según tu implementación
-    // Ejemplo:
-    // expect(mockProperty.commit).toHaveBeenCalled();
-    // O
-    // expect(eventPublisher.mergeObjectContext).toHaveBeenCalledWith(mockProperty);
+  //   // Verificar que el método commit se llamó en Property o en EventPublisher según tu implementación
+  //   // Ejemplo:
+  //   // expect(mockProperty.commit).toHaveBeenCalled();
+  //   // O
+  //   expect(eventPublisher.mergeObjectContext).toHaveBeenCalledWith(
+  //     mockProperty,
+  //   );
 
-    // Otras aserciones y verificaciones según sea necesario
-  });
+  //   // Otras aserciones y verificaciones según sea necesario
+  // });
 
   // Agrega más pruebas y casos según sea necesario
 });

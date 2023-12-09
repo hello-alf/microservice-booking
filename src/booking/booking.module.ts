@@ -20,8 +20,6 @@ import { QueryHandlers } from './application/queries/handlers';
 import { Factories } from './domain/factories';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
-console.log('process.env.RABBITMQ_URI', process.env.RABBITMQ_URI);
-
 @Module({
   imports: [
     CqrsModule,
