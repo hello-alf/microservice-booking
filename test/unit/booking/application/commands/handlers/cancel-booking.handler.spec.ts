@@ -42,20 +42,13 @@ describe('CancelBookingHandler', () => {
 
   it('Booking cancel', async () => {
     const bookingId = '123';
-    const mockBooking = {
-      cancelBooking: jest.fn(),
-      getBookingState: jest.fn(),
-      commit: jest.fn,
-    };
 
-    // Mock the behavior of dependencies
     bookingRepository.findById(bookingId);
   });
 
   it('Mostrar error BadRequestException', async () => {
     const bookingId = '123';
 
-    // Create a CancelBookingCommand instance
     const cancelBookingCommand = new CancelBookingCommand(bookingId);
 
     // Execute the handler and expect it to throw a BadRequestException

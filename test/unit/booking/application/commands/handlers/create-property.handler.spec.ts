@@ -5,8 +5,7 @@ import { CreatePropertyHandler } from '../../../../../../src/booking/application
 import { CreatePropertyCommand } from '../../../../../../src/booking/application/commands/impl/create-property.command';
 import { PropertyRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository';
 import { PropertyFactory } from '../../../../../../src/booking/domain/factories/property.factory';
-import { Property } from 'src/booking/domain/model/property.model';
-import { CreatePropertyDto } from 'src/booking/application/dtos/property.dto';
+import { CreatePropertyDto } from '../../../../../../src/booking/application/dtos/property.dto';
 
 describe('CreatePropertyHandler', () => {
   let createPropertyHandler: CreatePropertyHandler;
