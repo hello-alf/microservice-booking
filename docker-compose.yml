@@ -5,7 +5,7 @@ networks:
 
 services:
   rabbitmq:
-    image: rabbitmq:3.9-management-alpine
+    image: rabbitmq:3.12.12-management-alpine
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
