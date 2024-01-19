@@ -53,7 +53,7 @@ describe('CancelBookingHandler', () => {
   });
 
   it('Mostrar error BadRequestException', async () => {
-    const bookingId = 'bookingId';
+    const bookingId = '123';
 
     // Create a CancelBookingCommand instance
     const cancelBookingCommand = new CancelBookingCommand(bookingId);

@@ -1,10 +1,12 @@
 import { EventPublisher } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
+import { BadRequestException } from '@nestjs/common';
 import { CreateBookingHandler } from '../../../../../../src/booking/application/commands/handlers/create-booking.handler';
 import { CreateBookingCommand } from '../../../../../../src/booking/application/commands/impl/create-booking.command';
 import { BookingRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/booking.repository';
 import { PropertyRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository';
 import { BookingFactory } from '../../../../../../src/booking/domain/factories/booking.factory';
+import { CreateBookingDto } from 'src/booking/application/dtos/booking.dto';
 
 describe('CreateBookingHandler', () => {
   let createBookingHandler: CreateBookingHandler;
@@ -100,5 +102,16 @@ describe('CreateBookingHandler', () => {
     const createBookingCommand = new CreateBookingCommand(
       mockCreateBookingRequest,
     );
+  });
+
+  it('Mostrar error BadRequestException', async () => {
+    // Create a CompleteBookingCommand instance
+    const completeBookingCommand = new CreateBookingCommand(
+      new CreateBookingDto(),
+    );
+    // Execute the handler and expect it to throw a BadRequestException
+    await expect(
+      createBookingHandler.execute(completeBookingCommand),
+    ).rejects.toThrowError(BadRequestException);
   });
 });

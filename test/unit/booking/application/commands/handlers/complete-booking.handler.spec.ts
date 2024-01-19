@@ -41,27 +41,24 @@ describe('CancelBookingHandler', () => {
     expect(completeBookingHandler).toBeDefined();
   });
 
-  // it('Booking cancel', async () => {
-  //   const bookingId = '123';
-  //   const mockBooking = {
-  //     cancelBooking: jest.fn(),
-  //     getBookingState: jest.fn(),
-  //     commit: jest.fn,
-  //   };
+  it('Booking cancel', async () => {
+    const bookingId = '123';
+    const mockBooking = {
+      cancelBooking: jest.fn(),
+      getBookingState: jest.fn(),
+      commit: jest.fn,
+    };
+    // Mock the behavior of dependencies
+    bookingRepository.findById(bookingId);
+  });
 
-  //   // Mock the behavior of dependencies
-  //   bookingRepository.findById(bookingId);
-  // });
-
-  // it('Mostrar error BadRequestException', async () => {
-  //   const bookingId = 'bookingId';
-
-  //   // Create a CompleteBookingCommand instance
-  //   const completeBookingCommand = new CompleteBookingPaymentCommand(bookingId);
-
-  //   // Execute the handler and expect it to throw a BadRequestException
-  //   await expect(
-  //     completeBookingHandler.execute(completeBookingCommand),
-  //   ).rejects.toThrowError(BadRequestException);
-  // });
+  it('Mostrar error BadRequestException', async () => {
+    const bookingId = 'bookingId';
+    // Create a CompleteBookingCommand instance
+    const completeBookingCommand = new CompleteBookingPaymentCommand(bookingId);
+    // Execute the handler and expect it to throw a BadRequestException
+    await expect(
+      completeBookingHandler.execute(completeBookingCommand),
+    ).rejects.toThrowError(BadRequestException);
+  });
 });

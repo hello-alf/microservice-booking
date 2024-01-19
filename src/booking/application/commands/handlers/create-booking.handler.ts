@@ -60,7 +60,6 @@ export class CreateBookingHandler
 
       return booking;
     } catch (error) {
-      console.error(error);
       throw new BadRequestException(error.message);
     }
   }
