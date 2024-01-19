@@ -25,8 +25,8 @@ services:
       - '27018:27017'
     networks:
       - booking-net
-    depends_on:
-      - rabbitmq
+    # depends_on:
+    #   - rabbitmq
     volumes:
       - ./mongo_data:/data/db
 
