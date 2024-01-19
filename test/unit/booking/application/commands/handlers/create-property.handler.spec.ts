@@ -5,6 +5,8 @@ import { CreatePropertyHandler } from '../../../../../../src/booking/application
 import { CreatePropertyCommand } from '../../../../../../src/booking/application/commands/impl/create-property.command';
 import { PropertyRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository';
 import { PropertyFactory } from '../../../../../../src/booking/domain/factories/property.factory';
+import { Property } from 'src/booking/domain/model/property.model';
+import { CreatePropertyDto } from 'src/booking/application/dtos/property.dto';
 
 describe('CreatePropertyHandler', () => {
   let createPropertyHandler: CreatePropertyHandler;
@@ -32,6 +34,7 @@ describe('CreatePropertyHandler', () => {
           provide: EventPublisher,
           useValue: {
             mergeObjectContext: jest.fn(),
+            commit: jest.fn(),
           },
         },
       ],
@@ -49,35 +52,14 @@ describe('CreatePropertyHandler', () => {
     expect(createPropertyHandler).toBeDefined();
   });
 
-  // it('should create a property', async () => {
-  //   // Mock y configuración del objeto createPropertyCommand y otros mocks según sea necesario
-  //   const mockCreatePropertyRequest = {
-  //     id: 22,
-  //     name: '12312',
-  //     pricePerNight: 2,
-  //     address: 'Calle 123',
-  //     propertyType: 'Casa',
-  //     city: 'Medellin',
-  //   };
-  //   // Ejecutar el controlador
-  //   const createPropertyCommand = new CreatePropertyCommand(
-  //     mockCreatePropertyRequest,
-  //   );
+  it('Mostrar error BadRequestException', async () => {
+    // Create a CancelBookingCommand instance
+    const cancelBookingCommand = new CreatePropertyCommand(
+      new CreatePropertyDto(),
+    );
 
-  //   const mockProperty = await createPropertyHandler.execute(
-  //     createPropertyCommand,
-  //   );
-
-  //   // Verificar que el método commit se llamó en Property o en EventPublisher según tu implementación
-  //   // Ejemplo:
-  //   // expect(mockProperty.commit).toHaveBeenCalled();
-  //   // O
-  //   expect(eventPublisher.mergeObjectContext).toHaveBeenCalledWith(
-  //     mockProperty,
-  //   );
-
-  //   // Otras aserciones y verificaciones según sea necesario
-  // });
-
-  // Agrega más pruebas y casos según sea necesario
+    await expect(
+      createPropertyHandler.execute(cancelBookingCommand),
+    ).rejects.toThrowError(BadRequestException);
+  });
 });

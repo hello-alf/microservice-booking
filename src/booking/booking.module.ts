@@ -47,7 +47,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         },
       ],
       uri: process.env.RABBITMQ_URI,
-      connectionInitOptions: { timeout: 60000 },
+      connectionInitOptions: { wait: true, reject: true, timeout: 3000 },
     }),
   ],
   controllers: [BookingController, PropertyController],
