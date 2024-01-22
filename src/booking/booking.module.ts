@@ -38,7 +38,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
-          name: 'demostracion',
+          name: 'property-service:property-created',
           type: 'fanout',
         },
         {
@@ -46,7 +46,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           type: 'fanout',
         },
       ],
-      uri: process.env.RABBITMQ_URI,
+      uri: 'amqp://3.131.89.227:5672',
       connectionInitOptions: { wait: true, reject: true, timeout: 3000 },
     }),
   ],

@@ -1,6 +1,6 @@
 export interface iProperty {
   createProperty(
-    id: number,
+    id: string,
     name: string,
     address: string,
     propertyType: string,
