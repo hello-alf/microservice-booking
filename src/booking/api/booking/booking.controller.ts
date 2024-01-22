@@ -7,6 +7,7 @@ import { CancelBookingCommand } from '../../application/commands/impl/cancel-boo
 import { CompleteBookingPaymentCommand } from '../../application/commands/impl/complete-booking-payment.command';
 import { GetBookingsQuery } from '../../application/queries/impl/get-bookings.query';
 import { ApiTags } from '@nestjs/swagger';
+import { GetBookingQuery } from 'src/booking/application/queries/impl/get-booking.query';
 
 @ApiTags('booking')
 @Controller('booking')
@@ -18,7 +19,6 @@ export class BookingController {
 
   @Get('/')
   findAll() {
-    console.log('find all');
     return this.queryBus.execute(new GetBookingsQuery());
   }
 
@@ -40,5 +40,10 @@ export class BookingController {
   @Post(':id/payment/complete')
   completePayment(@Param('id') id: string) {
     return this.commandBus.execute(new CompleteBookingPaymentCommand(id));
+  }
+
+  @Get('/:id')
+  findOne(@Param('id') id: string) {
+    return this.queryBus.execute(new GetBookingQuery(id));
   }
 }
