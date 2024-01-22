@@ -55,7 +55,7 @@ export class CreateBookingHandler
         property.pricePerNight,
         createBookingRequest.numberOfGuests,
         createBookingRequest.propertyId,
-        guest.getId(),
+        guest,
         createBookingRequest.checkInDate,
         createBookingRequest.checkOutDate,
       );

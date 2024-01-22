@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { iBooking } from './iBooking';
 import { Booking } from '../model/booking.model';
+import { Guest } from '../model/guest.model';
 
 @Injectable()
 export class BookingFactory implements iBooking {
@@ -8,7 +9,7 @@ export class BookingFactory implements iBooking {
     costo: number,
     numberOfGuests: number,
     propertyId: string,
-    guestId: string,
+    guest: Guest,
     checkInDate: Date,
     checkOutDate: Date,
   ) {
@@ -16,7 +17,7 @@ export class BookingFactory implements iBooking {
       costo,
       numberOfGuests,
       propertyId,
-      guestId,
+      guest,
       checkInDate,
       checkOutDate,
     );

@@ -93,6 +93,6 @@ export class BookingRepository implements iBookingRepository {
   };
 
   findAll = (): Promise<BookingModelSchema[]> => {
-    return this.bookingModel.find().exec();
+    return this.bookingModel.find().populate('guest').exec();
   };
 }
