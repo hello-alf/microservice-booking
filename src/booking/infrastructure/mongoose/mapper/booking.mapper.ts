@@ -4,6 +4,8 @@ import { Model } from 'mongoose';
 
 import { Booking } from '../../../domain/model/booking.model';
 import { BookingModelSchema } from '../schemas/booking.schema';
+import { Guest } from 'src/booking/domain/model/guest.model';
+import { GuestModelSchema } from '../schemas/guest.schema';
 
 @Injectable()
 export class BookingMapper {
@@ -12,12 +14,24 @@ export class BookingMapper {
     private bookingModel: Model<BookingModelSchema>,
   ) {}
 
-  public mapToDomain(bookingDocumentSchema: BookingModelSchema): Booking {
+  public mapToDomain(
+    bookingDocumentSchema: BookingModelSchema,
+    guestDocumentSchema: GuestModelSchema,
+  ): Booking {
+    const actualGuest = new Guest(
+      guestDocumentSchema._id.toString(),
+      guestDocumentSchema.name,
+      guestDocumentSchema.lastname,
+      guestDocumentSchema.city,
+      guestDocumentSchema.country,
+      guestDocumentSchema.email,
+    );
+
     const booking = new Booking(
       bookingDocumentSchema.costByNight,
       bookingDocumentSchema.numberOfGuests,
       bookingDocumentSchema.propertyId,
-      '1232',
+      actualGuest,
       bookingDocumentSchema.checkInDate,
       bookingDocumentSchema.checkOutDate,
     );

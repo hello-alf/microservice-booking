@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { now } from 'mongoose';
-
+import { Types, now } from 'mongoose';
 import { IdentifiableEntitySchema } from '../../database/identifiable-entity.schema';
+import { GuestModelSchema } from './guest.schema';
 
 @Schema({ collection: 'bookings' })
 export class BookingModelSchema extends IdentifiableEntitySchema {
@@ -37,6 +37,9 @@ export class BookingModelSchema extends IdentifiableEntitySchema {
 
   @Prop({ type: Date, default: now() })
   updatedAt: Date;
+
+  @Prop({ type: Types.ObjectId, ref: GuestModelSchema.name })
+  guest: GuestModelSchema;
 }
 
 export const BookingSchema = SchemaFactory.createForClass(BookingModelSchema);

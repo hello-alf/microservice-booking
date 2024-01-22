@@ -1,7 +1,5 @@
-import { Booking } from '../model/booking.model';
-
 export interface iBookingRepository {
-  save: (booking: any) => any;
+  save: (booking: any, guest: any) => any;
 
   findAvailableBooking: (
     propertyId: string,

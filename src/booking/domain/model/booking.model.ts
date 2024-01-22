@@ -16,11 +16,12 @@ import { CheckOutEvent } from '../events/checkOutEvent';
 import { PaymentRevertedEvent } from '../events/paymentRevertedEvent';
 import { PaymentCompletedEvent } from '../events/paymentCompletedEvent';
 import { PaymentNoFundsResolvedEvent } from '../events/PaymentNoFundsResolvedEvent';
+import { Guest } from './guest.model';
 
 export class Booking extends AggregateRoot {
   private id: string;
   private propertyId: string;
-  private guestId: string;
+  private guest: Guest;
   private totalCost: PriceValue;
   private bookingState: BookingState;
   private paymentState: PaymentState;
@@ -34,7 +35,7 @@ export class Booking extends AggregateRoot {
     costByNight: number,
     numberOfGuests: number,
     propertyId: string,
-    guestId: string,
+    guest: Guest,
     checkInDate: Date,
     checkOutDate: Date,
   ) {
@@ -42,7 +43,7 @@ export class Booking extends AggregateRoot {
 
     this.id = uuidv4();
     this.propertyId = propertyId;
-    this.guestId = guestId;
+    this.guest = guest;
     this.checkInOut = new Check(checkInDate, checkOutDate);
     this.numberOfDays = this.checkInOut.getNumberOfDays();
 
@@ -174,5 +175,13 @@ export class Booking extends AggregateRoot {
 
   public getNumberOfDays(): number {
     return this.numberOfDays;
+  }
+
+  public getId(): string {
+    return this.id;
+  }
+
+  public getGuest(): Guest {
+    return this.guest;
   }
 }

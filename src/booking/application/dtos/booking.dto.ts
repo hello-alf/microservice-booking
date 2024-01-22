@@ -21,4 +21,9 @@ export class CreateBookingDto {
   @IsNotEmpty()
   @ApiProperty({ description: 'checkout of booking' })
   readonly checkOutDate: Date;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ description: 'guest identifier' })
+  readonly guest: string;
 }
