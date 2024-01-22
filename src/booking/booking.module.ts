@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BookingController } from './api/booking/booking.controller';
 import { PropertyController } from './api/property/property.controller';
 import { PropertyService } from './api/property-event/property.service';
+import { GuestService } from './api/guest-event/guest.service';
 import { Repositories } from './infrastructure/mongoose/repositories';
 import {
   BookingModelSchema,
@@ -14,6 +15,10 @@ import {
   PropertyModelSchema,
   PropertySchema,
 } from './infrastructure/mongoose/schemas/property.schema';
+import {
+  GuestModelSchema,
+  GuestSchema,
+} from './infrastructure/mongoose/schemas/guest.schema';
 import { Mapper } from './infrastructure/mongoose/mapper';
 import { CommandHandlers } from './application/commands/handlers';
 import { QueryHandlers } from './application/queries/handlers';
@@ -35,6 +40,12 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
         schema: PropertySchema,
       },
     ]),
+    MongooseModule.forFeature([
+      {
+        name: GuestModelSchema.name,
+        schema: GuestSchema,
+      },
+    ]),
     RabbitMQModule.forRoot(RabbitMQModule, {
       exchanges: [
         {
@@ -42,7 +53,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           type: 'fanout',
         },
         {
-          name: 'booking-service',
+          name: 'user-service:guest-created',
           type: 'fanout',
         },
       ],
@@ -58,6 +69,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
     ...Mapper,
     ...Factories,
     PropertyService,
+    GuestService,
   ],
 })
 export class BookingModule {}
