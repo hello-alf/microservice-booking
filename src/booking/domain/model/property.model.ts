@@ -2,7 +2,7 @@ import { AggregateRoot } from '@nestjs/cqrs';
 import { PositiveValue } from '../../../shared-kernel/valueObjects/positiveValue';
 
 export class Property extends AggregateRoot {
-  private id: PositiveValue;
+  private id: string;
   private name: string;
   private address: string;
   private propertyType: string;
@@ -10,7 +10,7 @@ export class Property extends AggregateRoot {
   private pricePerNight: PositiveValue;
 
   constructor(
-    id: number,
+    id: string,
     name: string,
     address: string,
     propertyType: string,
@@ -18,7 +18,7 @@ export class Property extends AggregateRoot {
     pricePerNight: number,
   ) {
     super();
-    this.id = new PositiveValue(id);
+    this.id = id;
     this.name = name;
     this.address = address;
     this.propertyType = propertyType;
@@ -26,11 +26,11 @@ export class Property extends AggregateRoot {
     this.pricePerNight = new PositiveValue(pricePerNight);
   }
 
-  public getId(): PositiveValue {
+  public getId(): string {
     return this.id;
   }
 
-  public setId(value: PositiveValue) {
+  public setId(value: string) {
     this.id = value;
   }
 

@@ -5,7 +5,7 @@ import { Property } from '../model/property.model';
 @Injectable()
 export class PropertyFactory implements iProperty {
   createProperty(
-    id: number,
+    id: string,
     name: string,
     address: string,
     propertyType: string,

@@ -5,7 +5,7 @@ export class CreatePropertyDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({ description: `identifier` })
-  readonly id: number;
+  readonly id: string;
 
   @IsString()
   @IsNotEmpty()

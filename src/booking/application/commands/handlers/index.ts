@@ -3,6 +3,7 @@ import { CreatePropertyHandler } from './create-property.handler';
 import { ConfirmBookingHandler } from './confirm-booking.handler';
 import { CancelBookingHandler } from './cancel-booking.handler';
 import { CompleteBookingPaymentHandler } from './complete-booking-payment.handler';
+import { CreateGuestHandler } from './create-guest.handler';
 
 export const CommandHandlers = [
   CreateBookingHandler,
@@ -10,4 +11,5 @@ export const CommandHandlers = [
   ConfirmBookingHandler,
   CancelBookingHandler,
   CompleteBookingPaymentHandler,
+  CreateGuestHandler,
 ];

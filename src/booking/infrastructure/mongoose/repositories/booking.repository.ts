@@ -7,16 +7,29 @@ import { BookingModelSchema } from '../schemas/booking.schema';
 import { iBookingRepository } from '../../../domain/repositories/iBooking';
 import { Booking } from '../../../domain/model/booking.model';
 import { BookingMapper } from '../mapper/booking.mapper';
+import { GuestModelSchema } from '../schemas/guest.schema';
+import { Guest } from 'src/booking/domain/model/guest.model';
 
 @Injectable()
 export class BookingRepository implements iBookingRepository {
   constructor(
     @InjectModel(BookingModelSchema.name)
     private readonly bookingModel: Model<BookingModelSchema>,
+    @InjectModel(GuestModelSchema.name)
+    private readonly guestModel: Model<GuestModelSchema>,
     private readonly bookingMapper: BookingMapper,
   ) {}
 
-  save = (booking: Booking): Booking => {
+  save = (booking: Booking, guest: Guest): Booking => {
+    const newGuest = new this.guestModel({
+      _id: new ObjectId(guest.getId()),
+      name: guest.getName(),
+      lastname: guest.getLastname(),
+      city: guest.getCity(),
+      country: guest.getCountry(),
+      email: guest.getEmail(),
+    });
+
     const newBooking = new this.bookingModel({
       _id: new ObjectId(),
       propertyId: booking.getPropertyId(),
@@ -29,11 +42,12 @@ export class BookingRepository implements iBookingRepository {
       registerDate: booking.getRegisterDate(),
       checkInDate: booking.getCheckInOut().getCheckInDate(),
       checkOutDate: booking.getCheckInOut().getCheckOutDate(),
+      guest: newGuest,
     });
 
     newBooking.save();
 
-    return this.bookingMapper.mapToDomain(newBooking);
+    return this.bookingMapper.mapToDomain(newBooking, newGuest);
   };
 
   findAvailableBooking = (
@@ -59,7 +73,10 @@ export class BookingRepository implements iBookingRepository {
 
     const booking = await this.bookingModel.findById(objectId).exec();
 
-    return this.bookingMapper.mapToDomain(booking);
+    const objectHostId = new ObjectId(booking.guest._id);
+    const guest = await this.guestModel.findById(objectHostId).exec();
+
+    return this.bookingMapper.mapToDomain(booking, guest);
   };
 
   findOneAndUpdate = async (id: string, payload: any): Promise<Booking> => {
@@ -69,10 +86,13 @@ export class BookingRepository implements iBookingRepository {
       .findOneAndUpdate({ _id: objectId }, { $set: payload }, { new: true })
       .exec();
 
-    return this.bookingMapper.mapToDomain(booking);
+    const objectHostId = new ObjectId(booking.guest._id);
+    const guest = await this.guestModel.findById(objectHostId).exec();
+
+    return this.bookingMapper.mapToDomain(booking, guest);
   };
 
   findAll = (): Promise<BookingModelSchema[]> => {
-    return this.bookingModel.find().exec();
+    return this.bookingModel.find().populate('guest').exec();
   };
 }

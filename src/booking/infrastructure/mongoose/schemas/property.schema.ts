@@ -4,7 +4,7 @@ import { IdentifiableEntitySchema } from '../../database/identifiable-entity.sch
 @Schema({ collection: 'properties' })
 export class PropertyModelSchema extends IdentifiableEntitySchema {
   @Prop({ required: true })
-  id: number;
+  id: string;
 
   @Prop({ required: true })
   name: string;

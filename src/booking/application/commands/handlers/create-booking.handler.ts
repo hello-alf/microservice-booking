@@ -10,6 +10,7 @@ import { BookingRepository } from '../../../infrastructure/mongoose/repositories
 import { PropertyRepository } from '../../../infrastructure/mongoose/repositories/property.repository';
 import { BookingError } from '../../../domain/errors/bookingError';
 import { BookingFactory } from '../../../domain/factories/booking.factory';
+import { GuestRepository } from 'src/booking/infrastructure/mongoose/repositories/guest.repository';
 
 @CommandHandler(CreateBookingCommand)
 export class CreateBookingHandler
@@ -17,6 +18,7 @@ export class CreateBookingHandler
 {
   constructor(
     private readonly bookingRepository: BookingRepository,
+    private readonly guestRepository: GuestRepository,
     private readonly propertyRepository: PropertyRepository,
     private readonly bookingFactory: BookingFactory,
     private readonly publisher: EventPublisher,
@@ -33,6 +35,12 @@ export class CreateBookingHandler
       if (!property)
         throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
 
+      const guest = await this.guestRepository.findById(
+        createBookingRequest.guest,
+      );
+
+      if (!guest) throw new NotFoundException(BookingError.PROPERTY_NOT_FOUND);
+
       const availableBooking =
         await this.bookingRepository.findAvailableBooking(
           createBookingRequest.propertyId,
@@ -47,13 +55,13 @@ export class CreateBookingHandler
         property.pricePerNight,
         createBookingRequest.numberOfGuests,
         createBookingRequest.propertyId,
-        '123123',
+        guest,
         createBookingRequest.checkInDate,
         createBookingRequest.checkOutDate,
       );
 
       const booking = this.publisher.mergeObjectContext(
-        this.bookingRepository.save(bookingObject),
+        this.bookingRepository.save(bookingObject, guest),
       );
 
       booking.commit();

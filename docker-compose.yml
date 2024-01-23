@@ -25,16 +25,11 @@ services:
       - '27018:27017'
     networks:
       - booking-net
-    # depends_on:
-    #   - rabbitmq
     volumes:
       - ./mongo_data:/data/db
 
-  # image: helloalf/microservice-booking
   booking:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: helloalf/microservice-booking
     environment:
       - MONGO_PORT=27017
       - MONGO_HOST=mongo
