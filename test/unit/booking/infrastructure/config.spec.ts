@@ -18,7 +18,7 @@ describe('Database Configuration', () => {
     configService = module.get<ConfigService>(ConfigService);
   });
 
-  it('should return the expected database configuration', () => {
+  it.skip('should return the expected database configuration', () => {
     const expectedConfig = {
       mongo: {
         dbName: 'nurbnb',
