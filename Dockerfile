@@ -14,4 +14,4 @@ RUN npm run build
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "sleep 120 && npm start"]
+CMD ["npm", "run", "start:prod"]
