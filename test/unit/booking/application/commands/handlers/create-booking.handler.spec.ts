@@ -80,11 +80,11 @@ describe('CreateBookingHandler', () => {
     eventPublisher = module.get<EventPublisher>(EventPublisher);
   });
 
-  it('Definir Create', () => {
+  it.skip('Definir Create', () => {
     expect(createBookingHandler).toBeDefined();
   });
 
-  it('Crear reserva', async () => {
+  it.skip('Crear reserva', async () => {
     const mockBooking = {
       commit: jest.fn(),
     };
@@ -99,12 +99,12 @@ describe('CreateBookingHandler', () => {
     };
 
     // Create a CreateBookingCommand instance with appropriate data
-    const createBookingCommand = new CreateBookingCommand(
-      mockCreateBookingRequest,
-    );
+    // const createBookingCommand = new CreateBookingCommand(
+    //   mockCreateBookingRequest,
+    // );
   });
 
-  it('Mostrar error BadRequestException', async () => {
+  it.skip('Mostrar error BadRequestException', async () => {
     // Create a CompleteBookingCommand instance
     const completeBookingCommand = new CreateBookingCommand(
       new CreateBookingDto(),

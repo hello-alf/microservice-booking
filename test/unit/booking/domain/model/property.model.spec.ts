@@ -4,7 +4,7 @@ import { PositiveValue } from '../../../../../src/shared-kernel/valueObjects/pos
 describe('Property', () => {
   test('Crear objeto tipo Property', () => {
     const property: Property = new Property(
-      2,
+      '2',
       'Departamento en Sopocachi',
       'CAlle 123',
       'Departamento',
@@ -19,7 +19,7 @@ describe('Property', () => {
 
   test('Actualizar Nombre Property', () => {
     const property: Property = new Property(
-      3,
+      '3',
       'Casa en Miraflores',
       'CAlle ABC',
       'Departamento',
@@ -36,7 +36,7 @@ describe('Property', () => {
 
   test('Actualizar Precio Property', () => {
     const property: Property = new Property(
-      4,
+      '4',
       'Garzonier en Sopocachi',
       'CAlle ABC',
       'Departamento',
