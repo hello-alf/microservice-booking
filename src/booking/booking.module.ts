@@ -56,6 +56,10 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           name: 'user-service:guest-created',
           type: 'fanout',
         },
+        {
+          name: 'booking-service:booking-paid',
+          type: 'fanout',
+        },
       ],
       uri: 'amqp://3.131.89.227:5672',
       connectionInitOptions: { wait: true, reject: true, timeout: 3000 },

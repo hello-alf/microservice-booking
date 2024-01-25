@@ -1,5 +1,6 @@
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
 import { BadRequestException } from '@nestjs/common';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
 import { CompleteBookingPaymentCommand } from '../impl/complete-booking-payment.command';
 import { BookingRepository } from '../../../infrastructure/mongoose/repositories/booking.repository';
@@ -11,6 +12,7 @@ export class CompleteBookingPaymentHandler
   constructor(
     private readonly bookingRepository: BookingRepository,
     private readonly publisher: EventPublisher,
+    private readonly amqpConnection: AmqpConnection,
   ) {}
 
   async execute(command: CompleteBookingPaymentCommand) {
@@ -28,6 +30,12 @@ export class CompleteBookingPaymentHandler
       });
 
       booking.commit();
+
+      await this.amqpConnection.publish(
+        'booking-service:booking-paid',
+        '',
+        booking,
+      );
 
       return booking;
     } catch (error) {
