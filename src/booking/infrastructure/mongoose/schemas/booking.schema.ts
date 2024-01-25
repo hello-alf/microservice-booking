@@ -40,6 +40,9 @@ export class BookingModelSchema extends IdentifiableEntitySchema {
 
   @Prop({ type: Types.ObjectId, ref: GuestModelSchema.name })
   guest: GuestModelSchema;
+
+  @Prop({ required: true })
+  host: string;
 }
 
 export const BookingSchema = SchemaFactory.createForClass(BookingModelSchema);

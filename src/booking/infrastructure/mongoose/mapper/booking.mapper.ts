@@ -28,12 +28,14 @@ export class BookingMapper {
     );
 
     const booking = new Booking(
+      bookingDocumentSchema._id.toString(),
       bookingDocumentSchema.costByNight,
       bookingDocumentSchema.numberOfGuests,
       bookingDocumentSchema.propertyId,
       actualGuest,
       bookingDocumentSchema.checkInDate,
       bookingDocumentSchema.checkOutDate,
+      bookingDocumentSchema.host,
     );
 
     if ('bookingState' in booking) {

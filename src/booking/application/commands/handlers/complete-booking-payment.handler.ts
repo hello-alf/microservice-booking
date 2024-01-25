@@ -31,15 +31,21 @@ export class CompleteBookingPaymentHandler
 
       booking.commit();
 
-      await this.amqpConnection.publish(
-        'booking-service:booking-paid',
-        '',
-        booking,
-      );
+      console.log('mandar por evento', booking);
+
+      // await this.sendEvent(booking);
 
       return booking;
     } catch (error) {
       throw new BadRequestException(error.message);
     }
+  }
+
+  private async sendEvent(booking) {
+    await this.amqpConnection.publish(
+      'booking-service:booking-paid',
+      '',
+      booking,
+    );
   }
 }

@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IdentifiableEntitySchema } from '../../database/identifiable-entity.schema';
+import { Document } from 'mongoose';
+import { ObjectId } from 'mongodb';
 
 @Schema({ collection: 'properties' })
-export class PropertyModelSchema extends IdentifiableEntitySchema {
-  @Prop({ required: true })
-  id: string;
+export class PropertyModelSchema extends Document {
+  @Prop()
+  _id: ObjectId;
 
   @Prop({ required: true })
   name: string;
@@ -20,6 +21,9 @@ export class PropertyModelSchema extends IdentifiableEntitySchema {
 
   @Prop({ required: true })
   pricePerNight: number;
+
+  @Prop({ required: true })
+  host: string;
 }
 
 export const PropertySchema = SchemaFactory.createForClass(PropertyModelSchema);

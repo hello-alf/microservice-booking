@@ -4,6 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CompleteBookingPaymentHandler } from '../../../../../../src/booking/application/commands/handlers/complete-booking-payment.handler';
 import { CompleteBookingPaymentCommand } from '../../../../../../src/booking/application/commands/impl/complete-booking-payment.command';
 import { BookingRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/booking.repository';
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 
 describe('CancelBookingHandler', () => {
   let completeBookingHandler: CompleteBookingPaymentHandler;
@@ -25,6 +26,12 @@ describe('CancelBookingHandler', () => {
           provide: EventPublisher,
           useValue: {
             mergeObjectContext: jest.fn(),
+          },
+        },
+        {
+          provide: AmqpConnection,
+          useValue: {
+            publish: jest.fn(),
           },
         },
       ],

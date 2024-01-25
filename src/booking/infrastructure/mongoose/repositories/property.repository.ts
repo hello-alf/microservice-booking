@@ -18,13 +18,13 @@ export class PropertyRepository implements iPropertyRepository {
 
   save = (property: Property): Property => {
     const newProperty = new this.propertyModel({
-      _id: new ObjectId(),
-      id: property.getId(),
+      _id: new ObjectId(property.getId()),
       name: property.getName(),
       address: property.getAddress(),
       propertyType: property.getPropertyType(),
       city: property.getCity(),
       pricePerNight: property.getPricePerNight().getValue(),
+      host: property.getHost(),
     });
 
     newProperty.save();

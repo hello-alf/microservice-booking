@@ -61,7 +61,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           type: 'fanout',
         },
       ],
-      uri: 'amqp://3.131.89.227:5672',
+      uri: 'amqps://farhdenj:BilLhsNpcQHME1p2ItwtM5sZImZaqmDC@shrimp.rmq.cloudamqp.com/farhdenj', //process.env.RABBITMQ_URI,
       connectionInitOptions: { wait: true, reject: true, timeout: 3000 },
     }),
   ],

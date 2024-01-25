@@ -6,5 +6,6 @@ export interface iProperty {
     propertyType: string,
     city: string,
     pricePerNight: number,
+    host: string,
   );
 }

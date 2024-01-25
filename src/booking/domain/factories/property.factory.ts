@@ -11,7 +11,16 @@ export class PropertyFactory implements iProperty {
     propertyType: string,
     city: string,
     pricePerNight: number,
+    host: string,
   ) {
-    return new Property(id, name, address, propertyType, city, pricePerNight);
+    return new Property(
+      id,
+      name,
+      address,
+      propertyType,
+      city,
+      pricePerNight,
+      host,
+    );
   }
 }
