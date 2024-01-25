@@ -33,7 +33,7 @@ export class CompleteBookingPaymentHandler
 
       console.log('mandar por evento', booking);
 
-      // await this.sendEvent(booking);
+      await this.sendEvent(booking);
 
       return booking;
     } catch (error) {
