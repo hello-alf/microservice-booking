@@ -43,6 +43,7 @@ export class BookingRepository implements iBookingRepository {
       checkInDate: booking.getCheckInOut().getCheckInDate(),
       checkOutDate: booking.getCheckInOut().getCheckOutDate(),
       guest: newGuest,
+      host: booking.getHost(),
     });
 
     newBooking.save();

@@ -8,6 +8,7 @@ export class Property extends AggregateRoot {
   private propertyType: string;
   private city: string;
   private pricePerNight: PositiveValue;
+  private host: string;
 
   constructor(
     id: string,
@@ -16,6 +17,7 @@ export class Property extends AggregateRoot {
     propertyType: string,
     city: string,
     pricePerNight: number,
+    host: string,
   ) {
     super();
     this.id = id;
@@ -24,6 +26,7 @@ export class Property extends AggregateRoot {
     this.propertyType = propertyType;
     this.city = city;
     this.pricePerNight = new PositiveValue(pricePerNight);
+    this.host = host;
   }
 
   public getId(): string {
@@ -72,5 +75,13 @@ export class Property extends AggregateRoot {
 
   public setPricePerNight(value: PositiveValue) {
     this.pricePerNight = value;
+  }
+
+  public getHost(): string {
+    return this.host;
+  }
+
+  public setHost(value: string) {
+    this.host = value;
   }
 }

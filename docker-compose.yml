@@ -28,15 +28,15 @@ services:
     volumes:
       - ./mongo_data:/data/db
 
-  booking:
-    image: helloalf/microservice-booking
-    environment:
-      - MONGO_PORT=27017
-      - MONGO_HOST=mongo
-      - RABBITMQ_URI=amqp://3.135.210.254:5672
-    ports:
-      - '3000:3000'
-    depends_on:
-      - mongo
-    networks:
-      - booking-net
+  # booking:
+  #   image: helloalf/microservice-booking
+  #   environment:
+  #     - MONGO_PORT=27017
+  #     - MONGO_HOST=mongo
+  #     - RABBITMQ_URI=amqp://3.135.210.254:5672
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - mongo
+  #   networks:
+  #     - booking-net

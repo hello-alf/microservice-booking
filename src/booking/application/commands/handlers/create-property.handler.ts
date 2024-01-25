@@ -25,6 +25,7 @@ export class CreatePropertyHandler
         createPropertyRequest.propertyType,
         createPropertyRequest.city,
         createPropertyRequest.pricePerNight,
+        createPropertyRequest.host,
       );
 
       const property = this.publisher.mergeObjectContext(

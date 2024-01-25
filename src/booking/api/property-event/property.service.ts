@@ -24,6 +24,7 @@ export class PropertyService {
       propertyType: msg.propertyType,
       city: msg.address.city,
       pricePerNight: msg.pricePerNight.value,
+      host: msg.host,
     };
 
     await this.commandBus.execute(new CreatePropertyCommand(createPropertyDto));

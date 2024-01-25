@@ -14,12 +14,13 @@ export class PropertyMapper {
 
   public mapToDomain(propertyDocumentSchema: PropertyModelSchema): Property {
     return new Property(
-      propertyDocumentSchema.id,
+      propertyDocumentSchema._id.toString(),
       propertyDocumentSchema.name,
       propertyDocumentSchema.address,
       propertyDocumentSchema.propertyType,
       propertyDocumentSchema.city,
       propertyDocumentSchema.pricePerNight,
+      propertyDocumentSchema.host,
     );
   }
 
@@ -31,6 +32,7 @@ export class PropertyMapper {
       propertyType: propertyEntity.getPropertyType(),
       city: propertyEntity.getCity(),
       pricePerNight: propertyEntity.getPricePerNight(),
+      host: propertyEntity.getHost(),
     });
     return propertySchema;
   }

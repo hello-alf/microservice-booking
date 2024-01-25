@@ -32,4 +32,9 @@ export class CreatePropertyDto {
   @IsPositive()
   @ApiProperty({ description: `price` })
   readonly pricePerNight: number;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({ description: `property host` })
+  readonly host: string;
 }

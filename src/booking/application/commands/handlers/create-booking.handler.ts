@@ -52,12 +52,14 @@ export class CreateBookingHandler
         throw new UnprocessableEntityException(BookingError.BUSY_BOOKING);
 
       const bookingObject = this.bookingFactory.createBooking(
+        '',
         property.pricePerNight,
         createBookingRequest.numberOfGuests,
         createBookingRequest.propertyId,
         guest,
         createBookingRequest.checkInDate,
         createBookingRequest.checkOutDate,
+        property.host,
       );
 
       const booking = this.publisher.mergeObjectContext(

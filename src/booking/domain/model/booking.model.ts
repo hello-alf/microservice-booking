@@ -30,18 +30,21 @@ export class Booking extends AggregateRoot {
   private numberOfDays: number;
   private costByNight: number;
   private checkInOut: Check;
+  private host: string;
 
   constructor(
+    id: string,
     costByNight: number,
     numberOfGuests: number,
     propertyId: string,
     guest: Guest,
     checkInDate: Date,
     checkOutDate: Date,
+    host: string,
   ) {
     super();
 
-    this.id = uuidv4();
+    this.id = id;
     this.propertyId = propertyId;
     this.guest = guest;
     this.checkInOut = new Check(checkInDate, checkOutDate);
@@ -58,6 +61,8 @@ export class Booking extends AggregateRoot {
     this.registerDate = new Date();
     this.numberOfGuests = numberOfGuests;
     this.costByNight = costByNight;
+    this.host = host;
+
     this.apply(new BookingPendingResolvedEvent(this.id));
   }
 
@@ -183,5 +188,13 @@ export class Booking extends AggregateRoot {
 
   public getGuest(): Guest {
     return this.guest;
+  }
+
+  public getHost(): string {
+    return this.host;
+  }
+
+  public setHost(host: string): void {
+    this.host = host;
   }
 }

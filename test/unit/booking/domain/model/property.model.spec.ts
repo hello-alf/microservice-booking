@@ -10,6 +10,7 @@ describe('Property', () => {
       'Departamento',
       'La Paz',
       95,
+      '123456789',
     );
 
     expect(property).toBeInstanceOf(Property);
@@ -25,6 +26,7 @@ describe('Property', () => {
       'Departamento',
       'La Paz',
       95,
+      '123456789',
     );
 
     expect(property).toBeInstanceOf(Property);
@@ -42,6 +44,7 @@ describe('Property', () => {
       'Departamento',
       'La Paz',
       120,
+      '123456789',
     );
 
     expect(property).toBeInstanceOf(Property);
