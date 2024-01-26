@@ -80,6 +80,30 @@ export class BookingRepository implements iBookingRepository {
     return this.bookingMapper.mapToDomain(booking, guest);
   };
 
+  findBookingMadeByGuest = async (
+    id: string,
+  ): Promise<BookingModelSchema[]> => {
+    const objectGuestId = new ObjectId(id);
+
+    const booking = await this.bookingModel
+      .find({
+        guest: objectGuestId,
+      })
+      .exec();
+
+    return booking;
+  };
+
+  findBookingMadeToHost = async (id: string): Promise<BookingModelSchema[]> => {
+    const booking = await this.bookingModel
+      .find({
+        host: id,
+      })
+      .exec();
+
+    return booking;
+  };
+
   findOneAndUpdate = async (id: string, payload: any): Promise<Booking> => {
     const objectId = new ObjectId(id);
 

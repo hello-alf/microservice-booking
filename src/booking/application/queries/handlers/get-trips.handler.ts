@@ -1,15 +1,15 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetBookingQuery } from '../impl/get-booking.query';
+import { GetTripsQuery } from '../impl/get-trips.query';
 import { BookingRepository } from '../../../infrastructure/mongoose/repositories/booking.repository';
 import { NotFoundException } from '@nestjs/common';
 
-@QueryHandler(GetBookingQuery)
-export class GetPropertyHandler implements IQueryHandler<GetBookingQuery> {
+@QueryHandler(GetTripsQuery)
+export class GetTripsHandler implements IQueryHandler<GetTripsQuery> {
   constructor(private readonly repository: BookingRepository) {}
 
-  async execute(query: GetBookingQuery) {
+  async execute(query: GetTripsQuery) {
     try {
-      const response = await this.repository.findById(query.id);
+      const response = await this.repository.findBookingMadeByGuest(query.id);
       return response;
     } catch (error) {
       throw new NotFoundException(`Booking with ID ${query.id} not found`);
