@@ -9,7 +9,8 @@ export class GetHostingHandler implements IQueryHandler<GetHostingQuery> {
 
   async execute(query: GetHostingQuery) {
     try {
-      return this.repository.findBookingMadeToHost(query.id);
+      const response = await this.repository.findBookingMadeToHost(query.id);
+      return response;
     } catch (error) {
       throw new NotFoundException(`Booking with ID ${query.id} not found`);
     }

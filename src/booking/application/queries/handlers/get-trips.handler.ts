@@ -9,7 +9,8 @@ export class GetTripsHandler implements IQueryHandler<GetTripsQuery> {
 
   async execute(query: GetTripsQuery) {
     try {
-      return this.repository.findBookingMadeByGuest(query.id);
+      const response = await this.repository.findBookingMadeByGuest(query.id);
+      return response;
     } catch (error) {
       throw new NotFoundException(`Booking with ID ${query.id} not found`);
     }
