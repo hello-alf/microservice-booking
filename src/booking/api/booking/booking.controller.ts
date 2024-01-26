@@ -1,13 +1,15 @@
 import { Body, Param, Controller, Post, Get } from '@nestjs/common';
-import { CreateBookingDto } from '../../application/dtos/booking.dto';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { ApiTags } from '@nestjs/swagger';
+import { CreateBookingDto } from '../../application/dtos/booking.dto';
 import { CreateBookingCommand } from '../../application/commands/impl/create-booking.command';
 import { ConfirmBookingCommand } from '../../application/commands/impl/confirm-booking.command';
 import { CancelBookingCommand } from '../../application/commands/impl/cancel-booking.command';
 import { CompleteBookingPaymentCommand } from '../../application/commands/impl/complete-booking-payment.command';
 import { GetBookingsQuery } from '../../application/queries/impl/get-bookings.query';
-import { ApiTags } from '@nestjs/swagger';
-import { GetBookingQuery } from 'src/booking/application/queries/impl/get-booking.query';
+import { GetBookingQuery } from '../../application/queries/impl/get-booking.query';
+import { GetTripsQuery } from '../../application/queries/impl/get-trips.query';
+import { GetHostingQuery } from '../../application/queries/impl/get-hosting.query';
 
 @ApiTags('booking')
 @Controller('booking')
@@ -20,6 +22,16 @@ export class BookingController {
   @Get('/')
   findAll() {
     return this.queryBus.execute(new GetBookingsQuery());
+  }
+
+  @Get('/trips/:id')
+  findTrips(@Param('id') id: string) {
+    return this.queryBus.execute(new GetTripsQuery(id));
+  }
+
+  @Get('/hosting/:id')
+  findHosting(@Param('id') id: string) {
+    return this.queryBus.execute(new GetHostingQuery(id));
   }
 
   @Post()
