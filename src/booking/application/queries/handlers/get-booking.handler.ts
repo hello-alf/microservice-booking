@@ -12,6 +12,7 @@ export class GetPropertyHandler implements IQueryHandler<GetBookingQuery> {
       const response = await this.repository.findById(query.id);
       return response;
     } catch (error) {
+      console.log(error);
       throw new NotFoundException(`Booking with ID ${query.id} not found`);
     }
   }

@@ -4,7 +4,7 @@ import config from '../../../../../src/booking/infrastructure/config';
 import { MongooseConfigModule } from '../../../../../src/booking/infrastructure/mongoose/mongoose.module';
 
 describe('Mongoose Module', () => {
-  it.skip('should compile the module', async () => {
+  it('should compile the module', async () => {
     const module = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({

@@ -1,6 +1,5 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { UnprocessableEntityException } from '@nestjs/common';
-import { v4 as uuidv4 } from 'uuid';
 
 import { PriceValue } from '../../../shared-kernel/valueObjects/priceValue';
 import { Currency } from '../../../shared-kernel/valueObjects/currency';
