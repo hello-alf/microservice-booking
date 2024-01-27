@@ -15,11 +15,7 @@ export class BusinessRuleValidationException {
     }
   }
 
-  private getMessage(): string {
+  public getMessage(): string {
     return this.message;
-  }
-
-  private toString(): string {
-    return `BusinessRule ${this.message}`;
   }
 }

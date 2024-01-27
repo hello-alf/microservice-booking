@@ -89,6 +89,7 @@ export class BookingRepository implements iBookingRepository {
       .find({
         guest: objectGuestId,
       })
+      .populate('guest')
       .exec();
 
     return booking;
@@ -99,6 +100,7 @@ export class BookingRepository implements iBookingRepository {
       .find({
         host: id,
       })
+      .populate('guest')
       .exec();
 
     return booking;
