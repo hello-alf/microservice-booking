@@ -6,7 +6,7 @@ import { PropertyRepository } from '../../../../../../src/booking/infrastructure
 import { BookingModelSchema } from '../../../../../../src/booking/infrastructure/mongoose/schemas/booking.schema';
 import { PropertyModelSchema } from '../../../../../../src/booking/infrastructure/mongoose/schemas/property.schema';
 import { GuestModelSchema } from '../../../../../../src/booking/infrastructure/mongoose/schemas/guest.schema';
-import { GuestRepository } from 'src/booking/infrastructure/mongoose/repositories/guest.repository';
+import { GuestRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/guest.repository';
 import { Mapper } from '../../../../../../src/booking/infrastructure/mongoose/mapper/index';
 
 describe('BookingRepository', () => {

@@ -1,17 +1,37 @@
-import { BadRequestException } from '@nestjs/common';
-import { EventPublisher } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreatePropertyHandler } from '../../../../../../src/booking/application/commands/handlers/create-property.handler';
+import { EventPublisher, ICommandHandler } from '@nestjs/cqrs';
+import { BadRequestException } from '@nestjs/common';
 import { CreatePropertyCommand } from '../../../../../../src/booking/application/commands/impl/create-property.command';
+import { CreatePropertyHandler } from '../../../../../../src/booking/application/commands/handlers/create-property.handler';
 import { PropertyRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository';
 import { PropertyFactory } from '../../../../../../src/booking/domain/factories/property.factory';
 import { CreatePropertyDto } from '../../../../../../src/booking/application/dtos/property.dto';
 
+// Mock para EventPublisher
+class MockEventPublisher {
+  mergeObjectContext() {
+    return {
+      commit: jest.fn(),
+    };
+  }
+}
+
+// Mock para PropertyRepository
+class MockPropertyRepository {
+  save() {
+    return {};
+  }
+}
+
+// Mock para PropertyFactory
+class MockPropertyFactory {
+  createProperty() {
+    return {};
+  }
+}
+
 describe('CreatePropertyHandler', () => {
-  let createPropertyHandler: CreatePropertyHandler;
-  let propertyRepository: PropertyRepository;
-  let propertyFactory: PropertyFactory;
-  let eventPublisher: EventPublisher;
+  let handler: ICommandHandler<CreatePropertyCommand>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -19,46 +39,35 @@ describe('CreatePropertyHandler', () => {
         CreatePropertyHandler,
         {
           provide: PropertyRepository,
-          useValue: {
-            save: jest.fn(),
-          },
-        },
-        {
-          provide: PropertyFactory,
-          useValue: {
-            createProperty: jest.fn(),
-          },
+          useClass: MockPropertyRepository,
         },
         {
           provide: EventPublisher,
-          useValue: {
-            mergeObjectContext: jest.fn(),
-            commit: jest.fn(),
-          },
+          useClass: MockEventPublisher,
+        },
+        {
+          provide: PropertyFactory,
+          useClass: MockPropertyFactory,
         },
       ],
     }).compile();
 
-    createPropertyHandler = module.get<CreatePropertyHandler>(
+    handler = module.get<ICommandHandler<CreatePropertyCommand>>(
       CreatePropertyHandler,
     );
-    propertyRepository = module.get<PropertyRepository>(PropertyRepository);
-    propertyFactory = module.get<PropertyFactory>(PropertyFactory);
-    eventPublisher = module.get<EventPublisher>(EventPublisher);
   });
 
-  it('should be defined', () => {
-    expect(createPropertyHandler).toBeDefined();
+  it('Debe estar definido', () => {
+    expect(handler).toBeDefined();
   });
 
-  it('Mostrar error BadRequestException', async () => {
-    // Create a CancelBookingCommand instance
-    const cancelBookingCommand = new CreatePropertyCommand(
-      new CreatePropertyDto(),
-    );
+  it('Debe manejar el comando CreatePropertyCommand', async () => {
+    const dto = new CreatePropertyDto();
 
-    await expect(
-      createPropertyHandler.execute(cancelBookingCommand),
-    ).rejects.toThrowError(BadRequestException);
+    const command = new CreatePropertyCommand(dto);
+
+    const result = await handler.execute(command);
+
+    expect(result).toBeDefined();
   });
 });

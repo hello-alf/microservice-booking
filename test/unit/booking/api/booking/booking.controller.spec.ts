@@ -7,9 +7,9 @@ import { ConfirmBookingCommand } from '../../../../../src/booking/application/co
 import { CancelBookingCommand } from '../../../../../src/booking/application/commands/impl/cancel-booking.command';
 import { CompleteBookingPaymentCommand } from '../../../../../src/booking/application/commands/impl/complete-booking-payment.command';
 import { GetBookingsQuery } from '../../../../../src/booking/application/queries/impl/get-bookings.query';
-import { GetTripsQuery } from 'src/booking/application/queries/impl/get-trips.query';
-import { GetHostingQuery } from 'src/booking/application/queries/impl/get-hosting.query';
-import { GetBookingQuery } from 'src/booking/application/queries/impl/get-booking.query';
+import { GetTripsQuery } from '../../../../../src/booking/application/queries/impl/get-trips.query';
+import { GetHostingQuery } from '../../../../../src/booking/application/queries/impl/get-hosting.query';
+import { GetBookingQuery } from '../../../../../src/booking/application/queries/impl/get-booking.query';
 
 describe('BookingController', () => {
   let controller: BookingController;
