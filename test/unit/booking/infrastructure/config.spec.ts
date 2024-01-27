@@ -18,10 +18,10 @@ describe('Database Configuration', () => {
     configService = module.get<ConfigService>(ConfigService);
   });
 
-  it.skip('should return the expected database configuration', () => {
+  it('should return the expected database configuration', () => {
     const expectedConfig = {
       mongo: {
-        dbName: 'nurbnb',
+        dbName: 'NUR-BOOKING-DB',
         user: 'mongo',
         password: 'secret',
         port: 27018,
