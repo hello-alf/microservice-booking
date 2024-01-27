@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 
 import { Booking } from '../../../domain/model/booking.model';
 import { BookingModelSchema } from '../schemas/booking.schema';
-import { Guest } from 'src/booking/domain/model/guest.model';
+import { Guest } from '../../../domain/model/guest.model';
 import { GuestModelSchema } from '../schemas/guest.schema';
 
 @Injectable()

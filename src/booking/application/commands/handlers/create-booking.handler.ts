@@ -10,7 +10,7 @@ import { BookingRepository } from '../../../infrastructure/mongoose/repositories
 import { PropertyRepository } from '../../../infrastructure/mongoose/repositories/property.repository';
 import { BookingError } from '../../../domain/errors/bookingError';
 import { BookingFactory } from '../../../domain/factories/booking.factory';
-import { GuestRepository } from 'src/booking/infrastructure/mongoose/repositories/guest.repository';
+import { GuestRepository } from '../../../infrastructure/mongoose/repositories/guest.repository';
 
 @CommandHandler(CreateBookingCommand)
 export class CreateBookingHandler

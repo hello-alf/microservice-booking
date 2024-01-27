@@ -8,7 +8,7 @@ import { iBookingRepository } from '../../../domain/repositories/iBooking';
 import { Booking } from '../../../domain/model/booking.model';
 import { BookingMapper } from '../mapper/booking.mapper';
 import { GuestModelSchema } from '../schemas/guest.schema';
-import { Guest } from 'src/booking/domain/model/guest.model';
+import { Guest } from '../../../domain/model/guest.model';
 
 @Injectable()
 export class BookingRepository implements iBookingRepository {

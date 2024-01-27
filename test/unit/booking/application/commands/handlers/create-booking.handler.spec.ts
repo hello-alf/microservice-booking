@@ -6,7 +6,7 @@ import { CreateBookingCommand } from '../../../../../../src/booking/application/
 import { BookingRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/booking.repository';
 import { PropertyRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository';
 import { BookingFactory } from '../../../../../../src/booking/domain/factories/booking.factory';
-import { CreateBookingDto } from 'src/booking/application/dtos/booking.dto';
+import { CreateBookingDto } from '../../../../../../src/booking/application/dtos/booking.dto';
 
 describe('CreateBookingHandler', () => {
   let createBookingHandler: CreateBookingHandler;
