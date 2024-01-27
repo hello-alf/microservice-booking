@@ -38,22 +38,23 @@ describe('BookingController', () => {
     expect(controller).toBeDefined();
   });
 
-  test.skip('Crear una propiedad', () => {
-    // const createPropertyDto: CreatePropertyDto = {
-    //   id: 10,
-    //   name: 'Casa Sopocachi',
-    //   pricePerNight: 150,
-    //   address: 'Calle 123',
-    //   propertyType: 'Casa',
-    //   city: 'Medellin',
-    // };
-    // controller.create(createPropertyDto);
-    // expect(commandBus.execute).toHaveBeenCalledWith(
-    //   new CreatePropertyCommand(createPropertyDto),
-    // );
+  test('Crear una propiedad', () => {
+    const createPropertyDto: CreatePropertyDto = {
+      id: '10',
+      name: 'Casa Sopocachi',
+      pricePerNight: 150,
+      address: 'Calle 123',
+      propertyType: 'Casa',
+      city: 'Medellin',
+      host: '123',
+    };
+    controller.create(createPropertyDto);
+    expect(commandBus.execute).toHaveBeenCalledWith(
+      new CreatePropertyCommand(createPropertyDto),
+    );
   });
 
-  test.skip('Listar todas las reservas', () => {
+  test('Listar todas las propiedades', () => {
     controller.findAll();
     expect(queryBus.execute).toHaveBeenCalledWith(new GetPropertiesQuery());
   });

@@ -7,6 +7,9 @@ import { ConfirmBookingCommand } from '../../../../../src/booking/application/co
 import { CancelBookingCommand } from '../../../../../src/booking/application/commands/impl/cancel-booking.command';
 import { CompleteBookingPaymentCommand } from '../../../../../src/booking/application/commands/impl/complete-booking-payment.command';
 import { GetBookingsQuery } from '../../../../../src/booking/application/queries/impl/get-bookings.query';
+import { GetTripsQuery } from 'src/booking/application/queries/impl/get-trips.query';
+import { GetHostingQuery } from 'src/booking/application/queries/impl/get-hosting.query';
+import { GetBookingQuery } from 'src/booking/application/queries/impl/get-booking.query';
 
 describe('BookingController', () => {
   let controller: BookingController;
@@ -37,24 +40,25 @@ describe('BookingController', () => {
     queryBus = module.get<QueryBus>(QueryBus);
   });
 
-  test.skip('Controller be defined', () => {
+  test('Controller be defined', () => {
     expect(controller).toBeDefined();
   });
 
-  test.skip('Crear una reserva', () => {
-    // const createBookingDto: CreateBookingDto = {
-    //   propertyId: '12331',
-    //   numberOfGuests: 1,
-    //   checkInDate: new Date(),
-    //   checkOutDate: new Date(),
-    // };
-    // controller.create(createBookingDto);
-    // expect(commandBus.execute).toHaveBeenCalledWith(
-    //   new CreateBookingCommand(createBookingDto),
-    // );
+  test('Crear una reserva', () => {
+    const createBookingDto: CreateBookingDto = {
+      propertyId: '12331',
+      numberOfGuests: 1,
+      checkInDate: new Date(),
+      checkOutDate: new Date(),
+      guest: '123',
+    };
+    controller.create(createBookingDto);
+    expect(commandBus.execute).toHaveBeenCalledWith(
+      new CreateBookingCommand(createBookingDto),
+    );
   });
 
-  test.skip('Confirmar una reserva', () => {
+  test('Confirmar una reserva', () => {
     const bookingId = '123';
     controller.confirm(bookingId);
     expect(commandBus.execute).toHaveBeenCalledWith(
@@ -62,7 +66,7 @@ describe('BookingController', () => {
     );
   });
 
-  test.skip('Cancelar una reserva', () => {
+  test('Cancelar una reserva', () => {
     const bookingId = '123';
     controller.cancel(bookingId);
     expect(commandBus.execute).toHaveBeenCalledWith(
@@ -70,7 +74,7 @@ describe('BookingController', () => {
     );
   });
 
-  test.skip('Completar el pago de una reserva', () => {
+  test('Completar el pago de una reserva', () => {
     const bookingId = '123';
     controller.completePayment(bookingId);
     expect(commandBus.execute).toHaveBeenCalledWith(
@@ -78,8 +82,26 @@ describe('BookingController', () => {
     );
   });
 
-  test.skip('Listar todas las reservas', () => {
+  test('Listar todas las reservas', () => {
     controller.findAll();
     expect(queryBus.execute).toHaveBeenCalledWith(new GetBookingsQuery());
+  });
+
+  test('Listar reservas de huesped', () => {
+    const id = '123';
+    controller.findTrips(id);
+    expect(queryBus.execute).toHaveBeenCalledWith(new GetTripsQuery(id));
+  });
+
+  test('Listar reservas hacia el host', () => {
+    const id = '123';
+    controller.findHosting(id);
+    expect(queryBus.execute).toHaveBeenCalledWith(new GetHostingQuery(id));
+  });
+
+  test('Listar una reserva', () => {
+    const id = '123';
+    controller.findOne(id);
+    expect(queryBus.execute).toHaveBeenCalledWith(new GetBookingQuery(id));
   });
 });
