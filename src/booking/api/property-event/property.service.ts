@@ -1,7 +1,7 @@
 import { RabbitSubscribe } from '@golevelup/nestjs-rabbitmq';
 import { Injectable } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreatePropertyCommand } from '../../../../src/booking/application/commands/impl/create-property.command';
+import { CreatePropertyCommand } from '../../application/commands/impl/create-property.command';
 import { CreatePropertyDto } from '../../../../src/booking/application/dtos/property.dto';
 
 @Injectable()
