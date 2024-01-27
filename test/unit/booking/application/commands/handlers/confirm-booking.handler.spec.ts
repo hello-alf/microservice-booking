@@ -1,14 +1,40 @@
 import { BadRequestException } from '@nestjs/common';
-import { EventPublisher } from '@nestjs/cqrs';
+import { EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfirmBookingHandler } from '../../../../../../src/booking/application/commands/handlers/confirm-booking.handler';
 import { ConfirmBookingCommand } from '../../../../../../src/booking/application/commands/impl/confirm-booking.command';
 import { BookingRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/booking.repository';
+import { BookingFactory } from '../../../../../../src/booking/domain/factories/booking.factory';
 
-describe('CancelBookingHandler', () => {
-  let confirmBookingHandler: ConfirmBookingHandler;
-  let bookingRepository: BookingRepository;
-  let eventPublisher: EventPublisher;
+class MockEventPublisher {
+  mergeObjectContext() {
+    return {
+      commit: jest.fn(),
+      confirmBooking: jest.fn(),
+      getBookingState: jest.fn(),
+    };
+  }
+}
+
+class MockHostRepository {
+  findById(id) {
+    if (id === '123') {
+      return {};
+    }
+
+    throw new BadRequestException('Booking not found');
+  }
+
+  findOneAndUpdate() {
+    return {};
+  }
+}
+
+class MockBookingFactory {}
+
+describe('ConfirmBookingHandler', () => {
+  let handler: ICommandHandler<ConfirmBookingCommand>;
+  let repository: BookingRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -16,52 +42,50 @@ describe('CancelBookingHandler', () => {
         ConfirmBookingHandler,
         {
           provide: BookingRepository,
-          useValue: {
-            findById: jest.fn(),
-            findOneAndUpdate: jest.fn(),
-          },
+          useClass: MockHostRepository,
         },
         {
           provide: EventPublisher,
-          useValue: {
-            mergeObjectContext: jest.fn(),
-          },
+          useClass: MockEventPublisher,
+        },
+        {
+          provide: BookingFactory,
+          useClass: MockBookingFactory,
         },
       ],
     }).compile();
 
-    confirmBookingHandler = module.get<ConfirmBookingHandler>(
+    handler = module.get<ICommandHandler<ConfirmBookingCommand>>(
       ConfirmBookingHandler,
     );
-    bookingRepository = module.get<BookingRepository>(BookingRepository);
-    eventPublisher = module.get<EventPublisher>(EventPublisher);
+    repository = module.get<BookingRepository>(BookingRepository);
   });
 
   it('Debe estar definido', () => {
-    expect(confirmBookingHandler).toBeDefined();
+    expect(handler).toBeDefined();
   });
 
-  it('Booking cancel', async () => {
+  it('Booking confirm', async () => {
     const bookingId = '123';
-    const mockBooking = {
-      cancelBooking: jest.fn(),
-      getBookingState: jest.fn(),
-      commit: jest.fn,
-    };
 
-    // Mock the behavior of dependencies
-    bookingRepository.findById(bookingId);
+    const command = new ConfirmBookingCommand(bookingId);
+
+    const result = await handler.execute(command);
+
+    expect(result).toBeDefined();
   });
 
   it('Mostrar error BadRequestException', async () => {
-    const bookingId = 'bookingId';
+    const bookingId = '1234546';
 
-    // Create a CompleteBookingCommand instance
-    const confirmBookingCommand = new ConfirmBookingCommand(bookingId);
+    const command = new ConfirmBookingCommand(bookingId);
 
-    // Execute the handler and expect it to throw a BadRequestException
-    await expect(
-      confirmBookingHandler.execute(confirmBookingCommand),
-    ).rejects.toThrowError(BadRequestException);
+    await expect(handler.execute(command)).rejects.toThrowError(
+      BadRequestException,
+    );
+
+    jest
+      .spyOn(MockHostRepository.prototype, 'findOneAndUpdate')
+      .mockRejectedValueOnce(new Error('Test Error') as never);
   });
 });

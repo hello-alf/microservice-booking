@@ -31,8 +31,6 @@ export class CompleteBookingPaymentHandler
 
       booking.commit();
 
-      console.log('mandar por evento', booking);
-
       await this.sendEvent(booking);
 
       return booking;

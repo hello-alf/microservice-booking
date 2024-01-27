@@ -1,19 +1,64 @@
-import { EventPublisher } from '@nestjs/cqrs';
 import { Test, TestingModule } from '@nestjs/testing';
-import { BadRequestException } from '@nestjs/common';
+import {
+  NotFoundException,
+  UnprocessableEntityException,
+  BadRequestException,
+} from '@nestjs/common';
+import { EventPublisher } from '@nestjs/cqrs';
 import { CreateBookingHandler } from '../../../../../../src/booking/application/commands/handlers/create-booking.handler';
 import { CreateBookingCommand } from '../../../../../../src/booking/application/commands/impl/create-booking.command';
 import { BookingRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/booking.repository';
 import { PropertyRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/property.repository';
 import { BookingFactory } from '../../../../../../src/booking/domain/factories/booking.factory';
 import { CreateBookingDto } from '../../../../../../src/booking/application/dtos/booking.dto';
+import { GuestRepository } from '../../../../../../src/booking/infrastructure/mongoose/repositories/guest.repository';
+
+class MockEventPublisher {
+  mergeObjectContext() {
+    return {
+      commit: jest.fn(),
+    };
+  }
+}
+
+class MockGuestRepository {
+  findById() {
+    return Promise.resolve({});
+  }
+
+  save() {
+    return {};
+  }
+}
+
+class MockBookingRepository {
+  save() {
+    return {};
+  }
+
+  findAvailableBooking() {
+    return [];
+  }
+
+  findById(id: string) {
+    return Promise.resolve(id === 'existingId' ? {} : null);
+  }
+}
+
+class MockBookingFactory {
+  createBooking() {
+    return {
+      commit: jest.fn(),
+    };
+  }
+}
 
 describe('CreateBookingHandler', () => {
-  let createBookingHandler: CreateBookingHandler;
+  let handler: CreateBookingHandler;
   let bookingRepository: BookingRepository;
   let propertyRepository: PropertyRepository;
   let bookingFactory: BookingFactory;
-  let eventPublisher: EventPublisher;
+  let publisher: EventPublisher;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,24 +66,9 @@ describe('CreateBookingHandler', () => {
         CreateBookingHandler,
         {
           provide: BookingRepository,
-          useValue: {
-            findById: jest.fn(),
-            findAvailableBooking: jest.fn().mockResolvedValue([]),
-            save: jest.fn().mockResolvedValue({
-              propertyId: '64d1489fdb349b6cd3dafb92',
-              numberOfGuests: 2,
-              numberOfDays: 1,
-              costByNight: 150,
-              totalCost: 300,
-              bookingState: 'Confirmado',
-              paymentState: 'Pendiente',
-              checkInDate: new Date(),
-              checkOutDate: new Date(),
-              registerDate: new Date(),
-              updatedAt: new Date(),
-            }),
-          },
+          useClass: MockBookingRepository,
         },
+        { provide: GuestRepository, useClass: MockGuestRepository },
         {
           provide: PropertyRepository,
           useValue: {
@@ -59,36 +89,27 @@ describe('CreateBookingHandler', () => {
         },
         {
           provide: BookingFactory,
-          useValue: {
-            createBooking: jest.fn(),
-          },
+          useClass: MockBookingFactory,
         },
         {
           provide: EventPublisher,
-          useValue: {
-            mergeObjectContext: jest.fn(),
-          },
+          useClass: MockEventPublisher,
         },
       ],
     }).compile();
 
-    createBookingHandler =
-      module.get<CreateBookingHandler>(CreateBookingHandler);
+    handler = module.get<CreateBookingHandler>(CreateBookingHandler);
     bookingRepository = module.get<BookingRepository>(BookingRepository);
     propertyRepository = module.get<PropertyRepository>(PropertyRepository);
     bookingFactory = module.get<BookingFactory>(BookingFactory);
-    eventPublisher = module.get<EventPublisher>(EventPublisher);
+    publisher = module.get<EventPublisher>(EventPublisher);
   });
 
-  it.skip('Definir Create', () => {
-    expect(createBookingHandler).toBeDefined();
+  it('Definir Create', () => {
+    expect(handler).toBeDefined();
   });
 
-  it.skip('Crear reserva', async () => {
-    const mockBooking = {
-      commit: jest.fn(),
-    };
-
+  it('Crear reserva', async () => {
     propertyRepository.findById('12312');
 
     const mockCreateBookingRequest = {
@@ -96,22 +117,18 @@ describe('CreateBookingHandler', () => {
       numberOfGuests: 2,
       checkInDate: new Date(),
       checkOutDate: new Date(),
+      guest: '123123',
     };
 
     // Create a CreateBookingCommand instance with appropriate data
-    // const createBookingCommand = new CreateBookingCommand(
-    //   mockCreateBookingRequest,
-    // );
-  });
-
-  it.skip('Mostrar error BadRequestException', async () => {
-    // Create a CompleteBookingCommand instance
-    const completeBookingCommand = new CreateBookingCommand(
-      new CreateBookingDto(),
+    const createBookingCommand = new CreateBookingCommand(
+      mockCreateBookingRequest,
     );
-    // Execute the handler and expect it to throw a BadRequestException
-    await expect(
-      createBookingHandler.execute(completeBookingCommand),
-    ).rejects.toThrowError(BadRequestException);
+
+    const result = await handler.execute(createBookingCommand);
+
+    // Assert
+    expect(result).toBeDefined();
+    expect(result.commit).toHaveBeenCalled();
   });
 });
