@@ -1,6 +1,8 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('config', () => {
+  console.log('process.env.MONGO_HOST', process.env.MONGO_HOST);
+  console.log('process.env', process.env);
   return {
     mongo: {
       dbName: process.env.MONGO_DB || 'NUR-BOOKING-DB',
